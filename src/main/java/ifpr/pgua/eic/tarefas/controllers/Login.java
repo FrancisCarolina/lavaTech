@@ -17,7 +17,7 @@ public class Login {
 
     @FXML
     void logar() {
-
+        App.pushScreen("INICIAL");
     }
 
 }

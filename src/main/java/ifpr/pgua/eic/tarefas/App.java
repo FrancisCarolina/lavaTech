@@ -1,6 +1,7 @@
 package ifpr.pgua.eic.tarefas;
 
 import ifpr.pgua.eic.tarefas.controllers.Cadastrar;
+import ifpr.pgua.eic.tarefas.controllers.Inicial;
 import ifpr.pgua.eic.tarefas.controllers.Login;
 import io.github.hugoperlin.navigatorfx.BaseAppNavigator;
 import io.github.hugoperlin.navigatorfx.ScreenRegistryFXML;
@@ -30,6 +31,7 @@ public class App extends BaseAppNavigator {
     public void registrarTelas() {
         registraTela("LOGIN", new ScreenRegistryFXML(App.class, "login.fxml", o -> new Login()));
         registraTela("CADASTRAR", new ScreenRegistryFXML(App.class, "cadastrar.fxml", o -> new Cadastrar()));
+        registraTela("INICIAL", new ScreenRegistryFXML(App.class, "inicial.fxml", o -> new Inicial()));
     }
 
 }
