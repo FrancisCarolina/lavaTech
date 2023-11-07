@@ -1,5 +1,6 @@
 package ifpr.pgua.eic.tarefas.controllers;
 
+import ifpr.pgua.eic.tarefas.App;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -32,7 +33,7 @@ public class Inicial {
 
     @FXML
     void agendar() {
-
+        App.pushScreen("CADASTRARSERVICO");
     }
 
     @FXML
@@ -52,6 +53,6 @@ public class Inicial {
 
     @FXML
     void perfil() {
-
+        App.pushScreen("PERFIL");
     }
 }
