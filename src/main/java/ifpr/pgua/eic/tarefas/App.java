@@ -41,7 +41,7 @@ public class App extends BaseAppNavigator {
 
     @Override
     public void registrarTelas() {
-        registraTela("LOGIN", new ScreenRegistryFXML(App.class, "login.fxml", o -> new Login()));
+        registraTela("LOGIN", new ScreenRegistryFXML(App.class, "login.fxml", o -> new Login(repositorioLavaCar)));
         registraTela("CADASTRAR", new ScreenRegistryFXML(App.class, "cadastrar.fxml", o -> new Cadastrar(repositorioLavaCar)));
         registraTela("INICIAL", new ScreenRegistryFXML(App.class, "inicial.fxml", o -> new Inicial()));
         registraTela("PERFIL", new ScreenRegistryFXML(App.class, "perfil.fxml", o -> new Perfil()));

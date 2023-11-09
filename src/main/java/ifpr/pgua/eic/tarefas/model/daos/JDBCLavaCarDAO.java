@@ -2,6 +2,7 @@ package ifpr.pgua.eic.tarefas.model.daos;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -68,6 +69,30 @@ public class JDBCLavaCarDAO implements LavaCarDAO{
     public Resultado deletar(int id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'deletar'");
+    }
+
+    @Override
+    public Resultado logar(String login, String senha) {
+        try (Connection con = fabrica.getConnection()) {
+            PreparedStatement pstm = con.prepareStatement("Select * from lavacar where login = ? and senha = ?");
+            
+            pstm.setString(1, login);
+            pstm.setString(2, senha);
+
+            ResultSet rs = pstm.executeQuery();
+
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String nome = rs.getString("nome");
+
+                LavaCar lavacar = new LavaCar(id,nome, login, senha);
+                return Resultado.sucesso("Logado com sucesso", lavacar);
+            }
+            
+            return Resultado.erro("Login ou Senha inválida!");
+        } catch (SQLException e) {
+            return Resultado.erro(e.getMessage());
+        }
     }
     
 }

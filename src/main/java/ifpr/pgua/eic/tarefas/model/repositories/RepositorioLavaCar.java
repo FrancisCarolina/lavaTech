@@ -28,4 +28,16 @@ public class RepositorioLavaCar {
 
         return dao.criar(lavacar);
     }
+
+    public Resultado logar(String login, String senha){
+        
+        if(login.isEmpty() || login.isBlank()){
+            return Resultado.erro("Login inválido!");
+        }
+        if(senha.isEmpty() || senha.isBlank()){
+            return Resultado.erro("Senha inválido!");
+        }
+
+        return dao.logar(login, senha);
+    }
 }
