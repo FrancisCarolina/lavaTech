@@ -10,6 +10,7 @@ public class Perfil {
 
     @FXML
     void agendar(ActionEvent event) {
+        App.popScreen();
         App.pushScreen("CADASTRARSERVICO");
     }
 
@@ -25,6 +26,11 @@ public class Perfil {
 
     @FXML
     void excluirPerfil(MouseEvent event) {
+
+    }
+    
+    @FXML
+    void sair(MouseEvent event) {
 
     }
 

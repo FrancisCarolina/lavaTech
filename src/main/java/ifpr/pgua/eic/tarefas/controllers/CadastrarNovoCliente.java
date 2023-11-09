@@ -1,39 +1,34 @@
 package ifpr.pgua.eic.tarefas.controllers;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import ifpr.pgua.eic.tarefas.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
-public class EditarPerfil implements Initializable{
+public class CadastrarNovoCliente {
+    @FXML
+    private TextField tfContato;
 
     @FXML
-    private TextField tfLogin;
+    private TextField tfNomeCliente;
 
     @FXML
-    private TextField tfNome;
+    void cadastrar(ActionEvent event) {
 
-    @FXML
-    private TextField tfSenha;
+    }
 
     @FXML
     void agendar(ActionEvent event) {
+        App.popScreen();
         App.pushScreen("CADASTRARSERVICO");
     }
-
     @FXML
-    void excluirPerfil(MouseEvent event) {
-
+    void inicial(MouseEvent event) {
+        App.popScreen();
+        App.pushScreen("INICIAL");
     }
-    @FXML
-    void sair(MouseEvent event) {
 
-    }
     @FXML
     void listar(ActionEvent event) {
 
@@ -42,18 +37,11 @@ public class EditarPerfil implements Initializable{
     @FXML
     void perfil(MouseEvent event) {
         App.popScreen();
+        App.pushScreen("PERFIL");
     }
 
     @FXML
     void voltar(ActionEvent event) {
         App.popScreen();
     }
-
-    @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
-        tfLogin.setText("lavacar123");
-        tfNome.setText("Lava Car1");
-        tfSenha.setText("senha123");
-    }
-
 }

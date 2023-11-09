@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifpr.pgua.eic.tarefas.controllers.Perfil">
    <children>
       <HBox prefHeight="36.0" prefWidth="600.0" style="-fx-background-color: #cacaca;">
@@ -50,6 +49,8 @@
                   <Label alignment="CENTER" onMouseClicked="#editarPerfil" prefHeight="37.0" prefWidth="175.0" style="-fx-cursor: hand;" text="Editar Perfil" textFill="WHITE" />
                   <Separator prefWidth="200.0" />
                   <Label alignment="CENTER" onMouseClicked="#excluirPerfil" prefHeight="37.0" prefWidth="162.0" style="-fx-cursor: hand;" text="Excluir Perfil" textFill="WHITE" />
+                  <Separator prefWidth="200.0" />
+                  <Label alignment="CENTER" onMouseClicked="#sair" prefHeight="37.0" prefWidth="162.0" style="-fx-cursor: hand;" text="Sair" textFill="WHITE" />
                   <Separator prefWidth="200.0" />
                </children>
                <padding>

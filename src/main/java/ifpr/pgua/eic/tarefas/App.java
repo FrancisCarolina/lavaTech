@@ -1,6 +1,7 @@
 package ifpr.pgua.eic.tarefas;
 
 import ifpr.pgua.eic.tarefas.controllers.Cadastrar;
+import ifpr.pgua.eic.tarefas.controllers.CadastrarNovoCliente;
 import ifpr.pgua.eic.tarefas.controllers.CadastrarServico;
 import ifpr.pgua.eic.tarefas.controllers.EditarPerfil;
 import ifpr.pgua.eic.tarefas.controllers.Inicial;
@@ -38,6 +39,7 @@ public class App extends BaseAppNavigator {
         registraTela("PERFIL", new ScreenRegistryFXML(App.class, "perfil.fxml", o -> new Perfil()));
         registraTela("EDITARPERFIL", new ScreenRegistryFXML(App.class, "editarPerfil.fxml", o -> new EditarPerfil()));
         registraTela("CADASTRARSERVICO", new ScreenRegistryFXML(App.class, "cadastrarServico.fxml", o -> new CadastrarServico()));
+        registraTela("CADASTRARCLIENTE", new ScreenRegistryFXML(App.class, "cadastrarNovoCliente.fxml", o -> new CadastrarNovoCliente()));
     }
 
 }
