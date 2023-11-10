@@ -17,25 +17,22 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<ScrollPane hbarPolicy="NEVER" prefHeight="530.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifpr.pgua.eic.tarefas.controllers.CadastrarServico">
+<ScrollPane hbarPolicy="NEVER" prefHeight="530.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifpr.pgua.eic.tarefas.controllers.CadastrarServico">
    <content>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="600.0">
          <children>
             <HBox prefHeight="36.0" prefWidth="600.0" style="-fx-background-color: #cacaca;">
                <children>
-                  <Label onMouseClicked="#voltar" prefHeight="28.0" prefWidth="165.0" style="-fx-cursor: hand;" text="LavaTech">
+                  <Label prefHeight="28.0" prefWidth="340.0" text="LavaTech">
                      <font>
                         <Font size="19.0" />
                      </font>
-                     <HBox.margin>
-                        <Insets right="320.0" />
-                     </HBox.margin>
                   </Label>
                   <HBox prefHeight="30.0" prefWidth="224.0">
                      <children>
-                        <Hyperlink onAction="#listar" prefHeight="23.0" prefWidth="56.0" text="Listar" />
-                        <Hyperlink prefHeight="23.0" prefWidth="63.0" text="Agendar" />
+                        <Hyperlink onAction="#clientes" prefHeight="23.0" prefWidth="76.0" text="Clientes" />
+                        <Hyperlink onAction="#listar" prefHeight="23.0" prefWidth="66.0" text="Listar" />
+                        <Hyperlink prefHeight="23.0" prefWidth="75.0" text="Agendar" />
                         <ImageView fitHeight="25.0" fitWidth="29.0" onMouseClicked="#perfil" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                            <image>
                               <Image url="@assets/icons8-usuário-homem-com-círculo-64.png" />

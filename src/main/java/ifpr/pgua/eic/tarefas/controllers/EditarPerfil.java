@@ -10,7 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
-public class EditarPerfil implements Initializable{
+public class EditarPerfil implements Initializable {
 
     @FXML
     private TextField tfLogin;
@@ -30,12 +30,19 @@ public class EditarPerfil implements Initializable{
     void excluirPerfil(MouseEvent event) {
 
     }
+
     @FXML
     void sair(MouseEvent event) {
 
     }
+
     @FXML
     void listar(ActionEvent event) {
+
+    }
+
+    @FXML
+    void clientes(ActionEvent event) {
 
     }
 

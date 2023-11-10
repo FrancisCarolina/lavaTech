@@ -36,6 +36,11 @@ public class Totalizar {
   }
 
   @FXML
+  void clientes(ActionEvent event) {
+
+  }
+
+  @FXML
   void perfil(MouseEvent event) {
 
   }

@@ -3,7 +3,6 @@ package ifpr.pgua.eic.tarefas.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
 import ifpr.pgua.eic.tarefas.App;
 import ifpr.pgua.eic.tarefas.model.entities.LavaCar;
 import javafx.event.ActionEvent;
@@ -12,7 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
-public class Perfil implements Initializable{
+public class Perfil implements Initializable {
 
     @FXML
     private Label lbLogin;
@@ -45,7 +44,12 @@ public class Perfil implements Initializable{
     void excluirPerfil(MouseEvent event) {
 
     }
-    
+
+    @FXML
+    void clientes(ActionEvent event) {
+
+    }
+
     @FXML
     void sair(MouseEvent event) {
         App.setLogado(null);
@@ -60,7 +64,7 @@ public class Perfil implements Initializable{
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        if(this.logado!= null){
+        if (this.logado != null) {
             lbLogin.setText(this.logado.getLogin());
             lbNome.setText(this.logado.getNome());
         }

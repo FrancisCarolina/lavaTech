@@ -13,17 +13,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifpr.pgua.eic.tarefas.controllers.Inicial">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifpr.pgua.eic.tarefas.controllers.Inicial">
    <children>
       <HBox prefHeight="36.0" prefWidth="600.0" style="-fx-background-color: #cacaca;">
          <children>
-            <Label prefHeight="28.0" prefWidth="510.0" text="LavaTech">
+            <Label prefHeight="28.0" prefWidth="340.0" text="LavaTech">
                <font>
                   <Font size="19.0" />
                </font>
             </Label>
             <HBox prefHeight="30.0" prefWidth="224.0">
                <children>
+                  <Hyperlink onAction="#clientes" prefHeight="23.0" prefWidth="76.0" text="Clientes" />
                   <Hyperlink onAction="#listar" prefHeight="23.0" prefWidth="66.0" text="Listar" />
                   <Hyperlink onAction="#agendar" prefHeight="23.0" prefWidth="75.0" text="Agendar" />
                   <ImageView fitHeight="25.0" fitWidth="29.0" onMouseClicked="#perfil" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">

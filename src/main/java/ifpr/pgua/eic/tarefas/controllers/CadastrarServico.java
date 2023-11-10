@@ -12,7 +12,6 @@ import javafx.scene.input.MouseEvent;
 
 public class CadastrarServico {
 
-    
     @FXML
     private ComboBox<?> cbTipo;
 
@@ -45,7 +44,12 @@ public class CadastrarServico {
     void novoCliente(ActionEvent event) {
         App.pushScreen("CADASTRARCLIENTE");
     }
-    
+
+    @FXML
+    void clientes(ActionEvent event) {
+
+    }
+
     @FXML
     void perfil(MouseEvent event) {
         App.popScreen();
@@ -58,4 +62,3 @@ public class CadastrarServico {
     }
 
 }
-

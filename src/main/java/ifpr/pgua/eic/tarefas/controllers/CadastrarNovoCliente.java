@@ -61,6 +61,11 @@ public class CadastrarNovoCliente {
     }
 
     @FXML
+    void clientes(ActionEvent event) {
+
+    }
+
+    @FXML
     void perfil(MouseEvent event) {
         App.popScreen();
         App.pushScreen("PERFIL");
