@@ -64,7 +64,8 @@ public class CadastrarServico implements Initializable{
 
     @FXML
     void clientes(ActionEvent event) {
-
+        App.popScreen();
+        App.pushScreen("LISTARCLIENTE");
     }
 
     @FXML

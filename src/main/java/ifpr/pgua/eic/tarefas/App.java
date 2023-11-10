@@ -5,6 +5,7 @@ import ifpr.pgua.eic.tarefas.controllers.CadastrarNovoCliente;
 import ifpr.pgua.eic.tarefas.controllers.CadastrarServico;
 import ifpr.pgua.eic.tarefas.controllers.EditarPerfil;
 import ifpr.pgua.eic.tarefas.controllers.Inicial;
+import ifpr.pgua.eic.tarefas.controllers.ListarCliente;
 import ifpr.pgua.eic.tarefas.controllers.Login;
 import ifpr.pgua.eic.tarefas.controllers.Perfil;
 import ifpr.pgua.eic.tarefas.model.daos.ClienteDAO;
@@ -65,6 +66,9 @@ public class App extends BaseAppNavigator {
         registraTela("CADASTRARCLIENTE",
                 new ScreenRegistryFXML(App.class, "cadastrarNovoCliente.fxml",
                         o -> new CadastrarNovoCliente(repositorioClientes)));
+        registraTela("LISTARCLIENTE",
+                new ScreenRegistryFXML(App.class, "listarClientes.fxml",
+                        o -> new ListarCliente()));
     }
 
 }

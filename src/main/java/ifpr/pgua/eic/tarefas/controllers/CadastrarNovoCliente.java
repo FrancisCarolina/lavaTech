@@ -85,6 +85,7 @@ public class CadastrarNovoCliente {
 
     @FXML
     void listarCliente(MouseEvent event) {
-
+        App.popScreen();
+        App.pushScreen("LISTARCLIENTE");
     }
 }

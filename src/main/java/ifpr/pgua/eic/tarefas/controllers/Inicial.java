@@ -54,7 +54,7 @@ public class Inicial {
 
     @FXML
     void clientes(ActionEvent event) {
-
+        App.pushScreen("LISTARCLIENTE");
     }
 
     @FXML
