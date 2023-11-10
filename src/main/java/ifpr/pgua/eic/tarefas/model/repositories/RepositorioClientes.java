@@ -25,4 +25,8 @@ public class RepositorioClientes {
     return dao.criar(cliente);
   }
 
+  public Resultado listarClientes() {
+    return dao.listar();
+  }
+
 }

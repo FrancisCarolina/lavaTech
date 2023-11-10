@@ -17,8 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<ScrollPane hbarPolicy="NEVER" prefHeight="530.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifpr.pgua.eic.tarefas.controllers.CadastrarServico">
+<ScrollPane hbarPolicy="NEVER" prefHeight="530.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifpr.pgua.eic.tarefas.controllers.CadastrarServico">
    <content>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="600.0">
          <children>
@@ -131,7 +130,7 @@
                         </HBox>
                         <HBox prefHeight="140.0" prefWidth="538.0">
                            <children>
-                              <ListView fx:id="lstNomeCliente" prefHeight="140.0" prefWidth="215.0">
+                              <ListView fx:id="lstNomeCliente" onMouseClicked="#visualizarCliente" prefHeight="140.0" prefWidth="215.0">
                                  <HBox.margin>
                                     <Insets right="20.0" />
                                  </HBox.margin>
