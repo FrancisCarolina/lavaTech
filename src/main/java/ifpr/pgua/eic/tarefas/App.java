@@ -68,7 +68,7 @@ public class App extends BaseAppNavigator {
                         o -> new CadastrarNovoCliente(repositorioClientes)));
         registraTela("LISTARCLIENTE",
                 new ScreenRegistryFXML(App.class, "listarClientes.fxml",
-                        o -> new ListarCliente()));
+                        o -> new ListarCliente(repositorioClientes)));
     }
 
 }

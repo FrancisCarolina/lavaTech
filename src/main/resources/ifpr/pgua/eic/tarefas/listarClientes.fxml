@@ -80,7 +80,7 @@
                                           <Insets bottom="5.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <ListView fx:id="lstClientes" prefHeight="190.0" prefWidth="161.0" />
+                                    <ListView fx:id="lstClientes" onMouseClicked="#mostrarDetalhes" prefHeight="190.0" prefWidth="161.0" />
                                  </children>
                                  <HBox.margin>
                                     <Insets right="20.0" />
