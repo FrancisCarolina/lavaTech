@@ -3,7 +3,6 @@ package ifpr.pgua.eic.tarefas.controllers;
 import com.github.hugoperlin.results.Resultado;
 
 import ifpr.pgua.eic.tarefas.App;
-import ifpr.pgua.eic.tarefas.model.entities.Cliente;
 import ifpr.pgua.eic.tarefas.model.repositories.RepositorioClientes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -42,7 +42,6 @@ public class App extends BaseAppNavigator {
     }
 
     public static void setLogado(LavaCar log) {
-        System.out.println("SET LOGADO: " + log.getLogin());
         logado = log;
     }
 

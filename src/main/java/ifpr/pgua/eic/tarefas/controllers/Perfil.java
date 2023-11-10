@@ -48,7 +48,9 @@ public class Perfil implements Initializable{
     
     @FXML
     void sair(MouseEvent event) {
-
+        App.setLogado(null);
+        App.popScreen();
+        App.popScreen();
     }
 
     @FXML

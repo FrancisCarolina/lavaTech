@@ -46,6 +46,8 @@ public class Login {
         }else{
             this.logado = (LavaCar) resultado.comoSucesso().getObj();
             App.setLogado(logado);
+            tfSenha.clear();
+            tfLogin.clear();
             App.pushScreen("INICIAL");
         }
     }
