@@ -3,6 +3,7 @@ package ifpr.pgua.eic.tarefas.controllers;
 import com.github.hugoperlin.results.Resultado;
 
 import ifpr.pgua.eic.tarefas.App;
+import ifpr.pgua.eic.tarefas.model.entities.LavaCar;
 import ifpr.pgua.eic.tarefas.model.repositories.RepositorioLavaCar;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -10,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 
 public class Login {
+    
     @FXML
     private TextField tfLogin;
     @FXML
@@ -21,9 +23,11 @@ public class Login {
     }
     
     private RepositorioLavaCar repositorio;
+    private LavaCar logado;
 
-    public Login(RepositorioLavaCar repositorio){
+    public Login(RepositorioLavaCar repositorio,LavaCar logado){
         this.repositorio = repositorio;
+        this.logado = logado;
     }
 
     @FXML
@@ -40,6 +44,8 @@ public class Login {
 
             alert.showAndWait();
         }else{
+            this.logado = (LavaCar) resultado.comoSucesso().getObj();
+            App.setLogado(logado);
             App.pushScreen("INICIAL");
         }
     }
