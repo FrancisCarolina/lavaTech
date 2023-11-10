@@ -128,7 +128,7 @@
                         </HBox>
                         <HBox prefHeight="140.0" prefWidth="538.0">
                            <children>
-                              <ListView fx:id="lstNomeCliente" prefHeight="140.0" prefWidth="215.0">
+                              <ListView fx:id="lstNomeCliente" onMouseClicked="#visualizarCliente" prefHeight="140.0" prefWidth="215.0">
                                  <HBox.margin>
                                     <Insets right="20.0" />
                                  </HBox.margin>

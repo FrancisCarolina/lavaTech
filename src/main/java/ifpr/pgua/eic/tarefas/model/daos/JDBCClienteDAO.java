@@ -2,8 +2,10 @@ package ifpr.pgua.eic.tarefas.model.daos;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import com.github.hugoperlin.results.Resultado;
 
@@ -48,8 +50,27 @@ public class JDBCClienteDAO implements ClienteDAO {
 
   @Override
   public Resultado listar() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'listar'");
+    try (Connection con = fabrica.getConnection()) {
+            PreparedStatement pstm = con.prepareStatement("SELECT * FROM cliente");
+
+            ResultSet rs = pstm.executeQuery();
+
+            ArrayList<Cliente> lista = new ArrayList<>();
+
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String nome = rs.getString("nome");
+                String contato = rs.getString("contato");
+
+                Cliente cliente = new Cliente(id,nome, contato);
+                lista.add(cliente);
+
+            }
+            
+            return Resultado.sucesso("Lista de clientes", lista);
+        } catch (SQLException e) {
+            return Resultado.erro(e.getMessage());
+        }
   }
 
   @Override
