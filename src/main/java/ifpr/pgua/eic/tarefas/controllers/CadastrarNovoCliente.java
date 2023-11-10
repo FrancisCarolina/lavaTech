@@ -77,4 +77,14 @@ public class CadastrarNovoCliente {
     void voltar(ActionEvent event) {
         App.popScreen();
     }
+
+    @FXML
+    void excluirCliente(MouseEvent event) {
+
+    }
+
+    @FXML
+    void listarCliente(MouseEvent event) {
+
+    }
 }
