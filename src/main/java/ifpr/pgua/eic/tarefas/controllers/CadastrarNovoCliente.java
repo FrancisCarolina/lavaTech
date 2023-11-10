@@ -37,6 +37,8 @@ public class CadastrarNovoCliente {
         if (resultado.foiErro()) {
             alert = new Alert(AlertType.ERROR, resultado.getMsg());
         } else {
+            tfContato.clear();
+            tfNomeCliente.clear();
             alert = new Alert(AlertType.INFORMATION, resultado.getMsg());
         }
 
