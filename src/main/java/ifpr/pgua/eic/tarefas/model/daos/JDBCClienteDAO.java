@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import com.github.hugoperlin.results.Resultado;
 
 import ifpr.pgua.eic.tarefas.model.entities.Cliente;
-import ifpr.pgua.eic.tarefas.model.entities.LavaCar;
 import ifpr.pgua.eic.tarefas.utils.DBUtils;
 
 public class JDBCClienteDAO implements ClienteDAO {
@@ -80,9 +79,27 @@ public class JDBCClienteDAO implements ClienteDAO {
   }
 
   @Override
-  public Resultado atualizar(int id, LavaCar novo) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'atualizar'");
+  public Resultado atualizar(int id, Cliente novo) {
+        //try with resources, para não precisar fechar a conexao
+        try(Connection con = fabrica.getConnection()){
+            
+          //Preparar o comando sql
+          PreparedStatement pstm = con.
+          prepareStatement("UPDATE cliente SET nome = ?, contato = ? WHERE id = ?", Statement.RETURN_GENERATED_KEYS);
+          //Ajustar os parâmetros
+          pstm.setString(1, novo.getNome());
+          pstm.setString(2, novo.getContato());
+          pstm.setInt(3, id);
+          //Executar o comando
+          int ret = pstm.executeUpdate();
+          
+          if(ret > 0){
+              return Resultado.sucesso("Cliente editado com sucesso!", novo);
+          }
+          return Resultado.erro("Erro desconhecido!");
+      }catch(SQLException e){
+          return Resultado.erro(e.getMessage());
+      }
   }
 
   @Override

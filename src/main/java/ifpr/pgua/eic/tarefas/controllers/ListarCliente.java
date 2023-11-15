@@ -52,6 +52,12 @@ public class ListarCliente implements Initializable{
     }
 
     @FXML
+    void editarCliente(MouseEvent event) {
+        App.popScreen();
+        App.pushScreen("EDITARCLIENTE");
+    }
+
+    @FXML
     void listar(ActionEvent event) {
 
     }

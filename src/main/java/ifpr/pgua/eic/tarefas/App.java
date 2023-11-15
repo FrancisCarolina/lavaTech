@@ -3,6 +3,7 @@ package ifpr.pgua.eic.tarefas;
 import ifpr.pgua.eic.tarefas.controllers.Cadastrar;
 import ifpr.pgua.eic.tarefas.controllers.CadastrarNovoCliente;
 import ifpr.pgua.eic.tarefas.controllers.CadastrarServico;
+import ifpr.pgua.eic.tarefas.controllers.EditarCliente;
 import ifpr.pgua.eic.tarefas.controllers.EditarPerfil;
 import ifpr.pgua.eic.tarefas.controllers.ExcluirCliente;
 import ifpr.pgua.eic.tarefas.controllers.Inicial;
@@ -73,6 +74,9 @@ public class App extends BaseAppNavigator {
         registraTela("EXCLUIRCLIENTE",
                 new ScreenRegistryFXML(App.class, "excluirCliente.fxml",
                         o -> new ExcluirCliente(repositorioClientes)));
+        registraTela("EDITARCLIENTE",
+                new ScreenRegistryFXML(App.class, "editarCliente.fxml",
+                        o -> new EditarCliente(repositorioClientes)));
     }
 
 }

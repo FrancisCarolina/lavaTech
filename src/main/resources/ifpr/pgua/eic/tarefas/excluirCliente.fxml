@@ -48,6 +48,8 @@
                   <Separator prefWidth="200.0" />
                   <Label alignment="CENTER" onMouseClicked="#cadastrarCliente" prefHeight="37.0" prefWidth="175.0" style="-fx-cursor: hand;" text="Cadastrar Cliente" textFill="WHITE" />
                   <Separator prefWidth="200.0" />
+                  <Label alignment="CENTER" onMouseClicked="#editarCliente" prefHeight="37.0" prefWidth="136.0" style="-fx-cursor: hand;" text="Editar Cliente" textFill="WHITE" />
+                  <Separator prefWidth="200.0" />
                   <Label alignment="CENTER" prefHeight="37.0" prefWidth="136.0" style="-fx-cursor: hand;" text="Excluir Cliente" textFill="WHITE" />
                   <Separator prefWidth="200.0" />
                </children>

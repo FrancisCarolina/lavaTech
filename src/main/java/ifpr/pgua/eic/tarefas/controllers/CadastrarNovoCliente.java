@@ -44,6 +44,11 @@ public class CadastrarNovoCliente {
 
         alert.showAndWait();
     }
+    @FXML
+    void editarCliente(MouseEvent event) {
+        App.popScreen();
+        App.pushScreen("EDITARCLIENTE");
+    }
 
     @FXML
     void agendar(ActionEvent event) {

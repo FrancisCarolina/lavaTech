@@ -33,4 +33,14 @@ public class RepositorioClientes {
       return dao.deletar(c.getId());
   }
 
+  public Resultado editarCliente(Cliente c) {
+    if (c.getNome().isEmpty() || c.getNome().isBlank()) {
+      return Resultado.erro("Nome inválido!");
+    }
+    if (c.getContato().isEmpty() || c.getContato().isBlank()) {
+      return Resultado.erro("Contato inválido!");
+    }
+    return dao.atualizar(c.getId(), c);
+  }
+
 }

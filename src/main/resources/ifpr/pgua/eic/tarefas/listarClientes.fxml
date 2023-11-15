@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifpr.pgua.eic.tarefas.controllers.ListarCliente">
    <children>
       <HBox prefHeight="36.0" prefWidth="600.0" style="-fx-background-color: #cacaca;">
@@ -47,6 +46,8 @@
                   <Label alignment="CENTER" prefHeight="37.0" prefWidth="170.0" style="-fx-cursor: hand;" text="Listar Cliente" textFill="WHITE" />
                   <Separator prefWidth="200.0" />
                   <Label alignment="CENTER" onMouseClicked="#cadastrarCliente" prefHeight="37.0" prefWidth="175.0" style="-fx-cursor: hand;" text="Cadastrar Cliente" textFill="WHITE" />
+                  <Separator prefWidth="200.0" />
+                  <Label alignment="CENTER" onMouseClicked="#editarCliente" prefHeight="37.0" prefWidth="136.0" style="-fx-cursor: hand;" text="Editar Cliente" textFill="WHITE" />
                   <Separator prefWidth="200.0" />
                   <Label alignment="CENTER" onMouseClicked="#excluirCliente" prefHeight="37.0" prefWidth="136.0" style="-fx-cursor: hand;" text="Excluir Cliente" textFill="WHITE" />
                   <Separator prefWidth="200.0" />

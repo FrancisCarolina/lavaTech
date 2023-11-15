@@ -14,27 +14,27 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
-public class ExcluirCliente implements Initializable {
+public class EditarCliente implements Initializable{
 
     @FXML
     private ListView<Cliente> lstClientes;
 
     @FXML
-    private TextArea taDetalhes;
+    private TextField tfContato;
 
-    
+    @FXML
+    private TextField tfNome;
+
     private RepositorioClientes repositorioClientes;
     
 
-    public ExcluirCliente(RepositorioClientes repositorioClientes) {
+    public EditarCliente(RepositorioClientes repositorioClientes) {
         this.repositorioClientes = repositorioClientes;
     }
-
 
     @FXML
     void agendar(ActionEvent event) {
@@ -49,39 +49,26 @@ public class ExcluirCliente implements Initializable {
     }
 
     @FXML
-    void excluir(ActionEvent event) {
+    void editar(ActionEvent event) {
         Cliente c = lstClientes.getSelectionModel().getSelectedItem();
-        if(c != null){
-            Alert alert = new Alert(AlertType.CONFIRMATION);
-            alert.setTitle("Confirmação");
-            alert.setHeaderText("Tem certeza que deseja excluir?");
+        Cliente novo = new Cliente(c.getId(), tfNome.getText(), tfContato.getText());
+        Resultado resultado = repositorioClientes.editarCliente(novo);
 
-            alert.getButtonTypes().setAll(ButtonType.OK, ButtonType.CANCEL);
+        Alert alert;
 
-            alert.showAndWait().ifPresent(response -> {
-                if (response == ButtonType.OK) {
-                    Resultado r = repositorioClientes.excluirCliente(c);
-                    if(r.foiSucesso()){
-                        Alert alertErro = new Alert(AlertType.INFORMATION, r.getMsg());
-                        alertErro.showAndWait();
-                        initialize(null, null);
-                    }else{
-                        Alert alertErro = new Alert(AlertType.ERROR, r.getMsg());
-                        alertErro.showAndWait();
-                    }
-                }
-            });
+        if (resultado.foiErro()) {
+            alert = new Alert(AlertType.ERROR, resultado.getMsg());
+        } else {
+            initialize(null, null);
+            alert = new Alert(AlertType.INFORMATION, resultado.getMsg());
         }
+
+        alert.showAndWait();
     }
 
     @FXML
     void listar(ActionEvent event) {
 
-    }
-    @FXML
-    void editarCliente(MouseEvent event) {
-        App.popScreen();
-        App.pushScreen("EDITARCLIENTE");
     }
 
     @FXML
@@ -91,27 +78,31 @@ public class ExcluirCliente implements Initializable {
     }
 
     @FXML
+    void mostrarDetalhes(MouseEvent event) {
+        Cliente c = lstClientes.getSelectionModel().getSelectedItem();
+        if(c != null){
+            tfNome.setText(c.getNome());
+            tfContato.setText(c.getContato());
+        }
+    }
+
+    @FXML
     void perfil(MouseEvent event) {
         App.popScreen();
         App.pushScreen("PERFIL");
     }
-
     @FXML
-    void mostrarDetalhes(MouseEvent event) {
-        Cliente c = lstClientes.getSelectionModel().getSelectedItem();
-        if(c != null){
-            taDetalhes.clear();
-            taDetalhes.appendText("Nome: "+c.getNome());
-            taDetalhes.appendText("\nContato: "+c.getContato());
-        }
+    void excluirCliente(MouseEvent event) {
+        App.popScreen();
+        App.pushScreen("EXCLUIRCLIENTE");
     }
+
     @FXML
     void voltar(ActionEvent event) {
         App.popScreen();
     }
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        taDetalhes.setEditable(false);
         lstClientes.getItems().clear();
         Resultado r1 = repositorioClientes.listarClientes();
 
@@ -123,5 +114,6 @@ public class ExcluirCliente implements Initializable {
             alert.showAndWait();
         }
     }
+    
 
 }
