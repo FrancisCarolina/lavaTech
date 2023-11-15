@@ -44,4 +44,18 @@ public class RepositorioLavaCar {
     public Resultado excluirLavaCar(LavaCar logado) {
       return dao.deletar(logado.getId());
     }
+
+    public Resultado editarLavaCar(LavaCar lc) {
+        if(lc.getNome().isEmpty() || lc.getNome().isBlank()){
+            return Resultado.erro("Nome inválido!");
+        }
+        if(lc.getLogin().isEmpty() || lc.getLogin().isBlank()){
+            return Resultado.erro("Login inválido!");
+        }
+        if(lc.getSenha().isEmpty() || lc.getSenha().isBlank()){
+            return Resultado.erro("Senha inválida!");
+        }
+
+        return dao.atualizar(lc.getId(), lc);
+    }
 }

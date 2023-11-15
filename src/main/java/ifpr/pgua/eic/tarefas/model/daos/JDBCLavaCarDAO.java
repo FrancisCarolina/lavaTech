@@ -61,8 +61,28 @@ public class JDBCLavaCarDAO implements LavaCarDAO{
 
     @Override
     public Resultado atualizar(int id, LavaCar novo) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'atualizar'");
+        //UPDATE lavacar SET nome = 'NovoNome', login = 'NovoLogin', senha = 'NovaSenha" WHERE id = 1;
+        //try with resources, para não precisar fechar a conexao
+        try(Connection con = fabrica.getConnection()){
+            
+            //Preparar o comando sql
+            PreparedStatement pstm = con.
+            prepareStatement("UPDATE lavacar SET nome = ?, login = ?, senha = ? WHERE id = ?", Statement.RETURN_GENERATED_KEYS);
+            //Ajustar os parâmetros
+            pstm.setString(1, novo.getNome());
+            pstm.setString(2, novo.getLogin());
+            pstm.setString(3, novo.getSenha());
+            pstm.setInt(4, id);
+            //Executar o comando
+            int ret = pstm.executeUpdate();
+            
+            if(ret > 0){
+                return Resultado.sucesso("LavaCar editado com sucesso!", novo);
+            }
+            return Resultado.erro("Erro desconhecido!");
+        }catch(SQLException e){
+            return Resultado.erro(e.getMessage());
+        }
     }
 
     @Override

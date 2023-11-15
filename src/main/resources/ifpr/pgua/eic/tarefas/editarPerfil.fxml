@@ -103,7 +103,7 @@
                               <Insets left="10.0" right="250.0" top="10.0" />
                            </HBox.margin>
                         </Hyperlink>
-                        <Button mnemonicParsing="false" text="Confirmar">
+                        <Button mnemonicParsing="false" onAction="#confirmar" text="Confirmar">
                            <HBox.margin>
                               <Insets top="10.0" />
                            </HBox.margin>

@@ -98,9 +98,21 @@ public class EditarPerfil implements Initializable {
 
     @FXML
     void confirmar(ActionEvent event) {
+        LavaCar lc = new LavaCar(logado.getId(), tfNome.getText(), tfLogin.getText(), tfSenha.getText());
+        Resultado resultado = repositorioLavaCar.editarLavaCar(lc);
 
+        Alert alert;
+
+        if (resultado.foiErro()) {
+            alert = new Alert(AlertType.ERROR, resultado.getMsg());
+        } else {
+            App.setLogado(lc);
+            alert = new Alert(AlertType.INFORMATION, resultado.getMsg());
+        }
+
+        alert.showAndWait();
     }
-    
+
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         tfLogin.setText(logado.getLogin());
