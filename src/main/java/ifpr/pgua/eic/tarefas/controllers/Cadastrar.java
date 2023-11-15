@@ -40,6 +40,9 @@ public class Cadastrar {
             alert = new Alert(AlertType.ERROR, resultado.getMsg());
         }else{
             alert = new Alert(AlertType.INFORMATION, resultado.getMsg());
+            tfNome.clear();
+            tfSenha.clear();
+            tfLogin.clear();
         }
 
         alert.showAndWait();
