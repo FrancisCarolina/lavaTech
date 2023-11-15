@@ -8,7 +8,9 @@ import com.github.hugoperlin.results.Resultado;
 
 import ifpr.pgua.eic.tarefas.App;
 import ifpr.pgua.eic.tarefas.model.entities.Cliente;
+import ifpr.pgua.eic.tarefas.model.entities.Tipo;
 import ifpr.pgua.eic.tarefas.model.repositories.RepositorioClientes;
+import ifpr.pgua.eic.tarefas.model.repositories.RepositorioTipo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,7 +26,7 @@ import javafx.scene.input.MouseEvent;
 public class CadastrarServico implements Initializable{
 
     @FXML
-    private ComboBox<?> cbTipo;
+    private ComboBox<Tipo> cbTipo;
 
     @FXML
     private DatePicker dpDataRealizacao;
@@ -43,8 +45,11 @@ public class CadastrarServico implements Initializable{
 
     private RepositorioClientes repositorioClientes;
 
-    public CadastrarServico(RepositorioClientes repositorioClientes) {
+    private RepositorioTipo repositorioTipo;
+
+    public CadastrarServico(RepositorioClientes repositorioClientes,  RepositorioTipo repositorioTipo) {
         this.repositorioClientes = repositorioClientes;
+        this.repositorioTipo = repositorioTipo;
     }
 
     @FXML
@@ -90,6 +95,7 @@ public class CadastrarServico implements Initializable{
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+        cbTipo.getItems().clear();
         taClientes.setEditable(false);
         lstNomeCliente.getItems().clear();
         Resultado r1 = repositorioClientes.listarClientes();
@@ -99,6 +105,15 @@ public class CadastrarServico implements Initializable{
             lstNomeCliente.getItems().addAll(list);
         }else{
             Alert alert = new Alert(AlertType.ERROR, r1.getMsg());
+            alert.showAndWait();
+        }
+
+        Resultado r2 = repositorioTipo.listarTipos();
+        if(r2.foiSucesso()){
+            List<Tipo> list = (List) r2.comoSucesso().getObj();
+            cbTipo.getItems().addAll(list);
+        }else{
+            Alert alert = new Alert(AlertType.ERROR, r2.getMsg());
             alert.showAndWait();
         }
     }

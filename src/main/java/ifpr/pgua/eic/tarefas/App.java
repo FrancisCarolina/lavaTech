@@ -14,10 +14,13 @@ import ifpr.pgua.eic.tarefas.model.daos.ClienteDAO;
 import ifpr.pgua.eic.tarefas.model.daos.FabricaConexoes;
 import ifpr.pgua.eic.tarefas.model.daos.JDBCClienteDAO;
 import ifpr.pgua.eic.tarefas.model.daos.JDBCLavaCarDAO;
+import ifpr.pgua.eic.tarefas.model.daos.JDBCTipoDAO;
 import ifpr.pgua.eic.tarefas.model.daos.LavaCarDAO;
+import ifpr.pgua.eic.tarefas.model.daos.TipoDAO;
 import ifpr.pgua.eic.tarefas.model.entities.LavaCar;
 import ifpr.pgua.eic.tarefas.model.repositories.RepositorioClientes;
 import ifpr.pgua.eic.tarefas.model.repositories.RepositorioLavaCar;
+import ifpr.pgua.eic.tarefas.model.repositories.RepositorioTipo;
 import io.github.hugoperlin.navigatorfx.BaseAppNavigator;
 import io.github.hugoperlin.navigatorfx.ScreenRegistryFXML;
 
@@ -31,6 +34,9 @@ public class App extends BaseAppNavigator {
 
     private ClienteDAO clienteDAO = new JDBCClienteDAO(FabricaConexoes.getInstance());
     private RepositorioClientes repositorioClientes = new RepositorioClientes(clienteDAO);
+
+    private TipoDAO tipoDAO = new JDBCTipoDAO(FabricaConexoes.getInstance());
+    private RepositorioTipo repositorioTipo = new RepositorioTipo(tipoDAO);
 
     private static LavaCar logado = null;
 
@@ -64,7 +70,7 @@ public class App extends BaseAppNavigator {
         registraTela("PERFIL", new ScreenRegistryFXML(App.class, "perfil.fxml", o -> new Perfil(logado, repositorioLavaCar)));
         registraTela("EDITARPERFIL", new ScreenRegistryFXML(App.class, "editarPerfil.fxml", o -> new EditarPerfil(logado, repositorioLavaCar)));
         registraTela("CADASTRARSERVICO",
-                new ScreenRegistryFXML(App.class, "cadastrarServico.fxml", o -> new CadastrarServico(repositorioClientes)));
+                new ScreenRegistryFXML(App.class, "cadastrarServico.fxml", o -> new CadastrarServico(repositorioClientes, repositorioTipo)));
         registraTela("CADASTRARCLIENTE",
                 new ScreenRegistryFXML(App.class, "cadastrarNovoCliente.fxml",
                         o -> new CadastrarNovoCliente(repositorioClientes)));
