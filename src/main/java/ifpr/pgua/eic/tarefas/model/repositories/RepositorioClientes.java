@@ -29,4 +29,8 @@ public class RepositorioClientes {
     return dao.listar();
   }
 
+  public Resultado excluirCliente(Cliente c) {
+      return dao.deletar(c.getId());
+  }
+
 }

@@ -14,11 +14,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 
-public class ListarCliente implements Initializable{
+public class ExcluirCliente implements Initializable {
 
     @FXML
     private ListView<Cliente> lstClientes;
@@ -26,12 +27,14 @@ public class ListarCliente implements Initializable{
     @FXML
     private TextArea taDetalhes;
 
+    
     private RepositorioClientes repositorioClientes;
     
 
-    public ListarCliente(RepositorioClientes repositorioClientes) {
+    public ExcluirCliente(RepositorioClientes repositorioClientes) {
         this.repositorioClientes = repositorioClientes;
     }
+
 
     @FXML
     void agendar(ActionEvent event) {
@@ -46,14 +49,40 @@ public class ListarCliente implements Initializable{
     }
 
     @FXML
-    void excluirCliente(MouseEvent event) {
-        App.popScreen();
-        App.pushScreen("EXCLUIRCLIENTE");
+    void excluir(ActionEvent event) {
+        Cliente c = lstClientes.getSelectionModel().getSelectedItem();
+        if(c != null){
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Confirmação");
+            alert.setHeaderText("Tem certeza que deseja excluir?");
+
+            alert.getButtonTypes().setAll(ButtonType.OK, ButtonType.CANCEL);
+
+            alert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    Resultado r = repositorioClientes.excluirCliente(c);
+                    if(r.foiSucesso()){
+                        Alert alertErro = new Alert(AlertType.INFORMATION, r.getMsg());
+                        alertErro.showAndWait();
+                        initialize(null, null);
+                    }else{
+                        Alert alertErro = new Alert(AlertType.ERROR, r.getMsg());
+                        alertErro.showAndWait();
+                    }
+                }
+            });
+        }
     }
 
     @FXML
     void listar(ActionEvent event) {
 
+    }
+
+    @FXML
+    void listarCliente(MouseEvent event) {
+        App.popScreen();
+        App.pushScreen("LISTARCLIENTE");
     }
 
     @FXML

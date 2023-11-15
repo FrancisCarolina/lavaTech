@@ -87,8 +87,24 @@ public class JDBCClienteDAO implements ClienteDAO {
 
   @Override
   public Resultado deletar(int id) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'deletar'");
+    
+    try (Connection con = fabrica.getConnection()) {
+            PreparedStatement pstm = con.prepareStatement("Delete FROM cliente where id=?", Statement.RETURN_GENERATED_KEYS);
+           
+            pstm.setInt(1, id);
+
+            int linhasAfetadas = pstm.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                // Exclusão bem-sucedida
+                return Resultado.sucesso("Excluído com sucesso", "");
+            } else {
+                // Nenhuma linha afetada, cliente não encontrado
+                return Resultado.erro("Cliente não encontrado");
+            }
+        } catch (SQLException e) {
+            return Resultado.erro(e.getMessage());
+        }
   }
 
 }
