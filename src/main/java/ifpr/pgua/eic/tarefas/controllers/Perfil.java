@@ -45,6 +45,7 @@ public class Perfil implements Initializable {
 
     @FXML
     void editarPerfil(MouseEvent event) {
+        App.popScreen();
         App.pushScreen("EDITARPERFIL");
     }
 

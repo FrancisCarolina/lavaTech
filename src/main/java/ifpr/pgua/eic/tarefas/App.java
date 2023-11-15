@@ -61,7 +61,7 @@ public class App extends BaseAppNavigator {
                 new ScreenRegistryFXML(App.class, "cadastrar.fxml", o -> new Cadastrar(repositorioLavaCar)));
         registraTela("INICIAL", new ScreenRegistryFXML(App.class, "inicial.fxml", o -> new Inicial()));
         registraTela("PERFIL", new ScreenRegistryFXML(App.class, "perfil.fxml", o -> new Perfil(logado, repositorioLavaCar)));
-        registraTela("EDITARPERFIL", new ScreenRegistryFXML(App.class, "editarPerfil.fxml", o -> new EditarPerfil()));
+        registraTela("EDITARPERFIL", new ScreenRegistryFXML(App.class, "editarPerfil.fxml", o -> new EditarPerfil(logado, repositorioLavaCar)));
         registraTela("CADASTRARSERVICO",
                 new ScreenRegistryFXML(App.class, "cadastrarServico.fxml", o -> new CadastrarServico(repositorioClientes)));
         registraTela("CADASTRARCLIENTE",
