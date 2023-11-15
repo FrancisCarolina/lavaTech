@@ -67,8 +67,21 @@ public class JDBCLavaCarDAO implements LavaCarDAO{
 
     @Override
     public Resultado deletar(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deletar'");
+        try (Connection con = fabrica.getConnection()) {
+            PreparedStatement pstm = con.prepareStatement("Delete FROM lavacar where id=?", Statement.RETURN_GENERATED_KEYS);
+           
+            pstm.setInt(1, id);
+
+            int linhasAfetadas = pstm.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                return Resultado.sucesso("Excluído com sucesso", "");
+            } else {
+                return Resultado.erro("Lavacar não encontrado");
+            }
+        } catch (SQLException e) {
+            return Resultado.erro(e.getMessage());
+        }
     }
 
     @Override

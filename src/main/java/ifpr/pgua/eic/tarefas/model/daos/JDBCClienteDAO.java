@@ -96,10 +96,8 @@ public class JDBCClienteDAO implements ClienteDAO {
             int linhasAfetadas = pstm.executeUpdate();
 
             if (linhasAfetadas > 0) {
-                // Exclusão bem-sucedida
                 return Resultado.sucesso("Excluído com sucesso", "");
             } else {
-                // Nenhuma linha afetada, cliente não encontrado
                 return Resultado.erro("Cliente não encontrado");
             }
         } catch (SQLException e) {

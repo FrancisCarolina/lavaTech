@@ -40,4 +40,8 @@ public class RepositorioLavaCar {
 
         return dao.logar(login, senha);
     }
+
+    public Resultado excluirLavaCar(LavaCar logado) {
+      return dao.deletar(logado.getId());
+    }
 }

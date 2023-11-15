@@ -3,11 +3,17 @@ package ifpr.pgua.eic.tarefas.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.github.hugoperlin.results.Resultado;
+
 import ifpr.pgua.eic.tarefas.App;
 import ifpr.pgua.eic.tarefas.model.entities.LavaCar;
+import ifpr.pgua.eic.tarefas.model.repositories.RepositorioLavaCar;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
@@ -19,9 +25,11 @@ public class Perfil implements Initializable {
     private Label lbNome;
 
     private LavaCar logado;
+    private RepositorioLavaCar repositorioLavaCar;
 
-    public Perfil(LavaCar logado) {
+    public Perfil(LavaCar logado, RepositorioLavaCar repositorioLavaCar) {
         this.logado = logado;
+        this.repositorioLavaCar = repositorioLavaCar;
     }
 
     @FXML
@@ -42,7 +50,28 @@ public class Perfil implements Initializable {
 
     @FXML
     void excluirPerfil(MouseEvent event) {
+        if(logado != null){
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Confirmação");
+            alert.setHeaderText("Tem certeza que deseja excluir?");
 
+            alert.getButtonTypes().setAll(ButtonType.OK, ButtonType.CANCEL);
+
+            alert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    Resultado r = repositorioLavaCar.excluirLavaCar(logado);
+                    if(r.foiSucesso()){
+                        Alert alertErro = new Alert(AlertType.INFORMATION, r.getMsg());
+                        alertErro.showAndWait();
+                        App.popScreen();
+                        App.popScreen();
+                    }else{
+                        Alert alertErro = new Alert(AlertType.ERROR, r.getMsg());
+                        alertErro.showAndWait();
+                    }
+                }
+            });
+        }
     }
 
     @FXML
