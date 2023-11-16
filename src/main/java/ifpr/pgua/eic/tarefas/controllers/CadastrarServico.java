@@ -1,6 +1,8 @@
 package ifpr.pgua.eic.tarefas.controllers;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -8,8 +10,10 @@ import com.github.hugoperlin.results.Resultado;
 
 import ifpr.pgua.eic.tarefas.App;
 import ifpr.pgua.eic.tarefas.model.entities.Cliente;
+import ifpr.pgua.eic.tarefas.model.entities.LavaCar;
 import ifpr.pgua.eic.tarefas.model.entities.Tipo;
 import ifpr.pgua.eic.tarefas.model.repositories.RepositorioClientes;
+import ifpr.pgua.eic.tarefas.model.repositories.RepositorioServico;
 import ifpr.pgua.eic.tarefas.model.repositories.RepositorioTipo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,7 +27,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
-public class CadastrarServico implements Initializable{
+public class CadastrarServico implements Initializable {
 
     @FXML
     private ComboBox<Tipo> cbTipo;
@@ -45,16 +49,43 @@ public class CadastrarServico implements Initializable{
 
     private RepositorioClientes repositorioClientes;
 
+    private RepositorioServico repositorioServico;
+
     private RepositorioTipo repositorioTipo;
 
-    public CadastrarServico(RepositorioClientes repositorioClientes,  RepositorioTipo repositorioTipo) {
+    private LavaCar logado;
+
+    public CadastrarServico(RepositorioClientes repositorioClientes, RepositorioTipo repositorioTipo,
+            RepositorioServico repositorioServico, LavaCar logado) {
         this.repositorioClientes = repositorioClientes;
         this.repositorioTipo = repositorioTipo;
+        this.repositorioServico = repositorioServico;
+        this.logado = logado;
     }
 
     @FXML
     void cadastrar(ActionEvent event) {
+        String custo = tfCusto.getText();
+        Cliente c = lstNomeCliente.getSelectionModel().getSelectedItem();
+        LocalDate data = dpDataRealizacao.getValue();
+        Tipo tipo = cbTipo.getSelectionModel().getSelectedItem();
 
+        Resultado resultado = repositorioServico.cadastrarServico(custo, c, data, tipo, logado);
+
+        Alert alert;
+
+        if (resultado.foiErro()) {
+            alert = new Alert(AlertType.ERROR, resultado.getMsg());
+        } else {
+            tfCusto.clear();
+            dpDataRealizacao.getEditor().clear();
+            cbTipo.getSelectionModel().clearSelection();
+            lstNomeCliente.getSelectionModel().clearSelection();
+            taClientes.clear();
+            alert = new Alert(AlertType.INFORMATION, resultado.getMsg());
+        }
+
+        alert.showAndWait();
     }
 
     @FXML
@@ -83,13 +114,14 @@ public class CadastrarServico implements Initializable{
     void voltar(ActionEvent event) {
         App.popScreen();
     }
+
     @FXML
     void visualizarCliente(MouseEvent event) {
         Cliente c = lstNomeCliente.getSelectionModel().getSelectedItem();
-        if(c != null){
+        if (c != null) {
             taClientes.clear();
-            taClientes.appendText("Nome: "+c.getNome());
-            taClientes.appendText("\nContato: "+c.getContato());
+            taClientes.appendText("Nome: " + c.getNome());
+            taClientes.appendText("\nContato: " + c.getContato());
         }
     }
 
@@ -100,19 +132,19 @@ public class CadastrarServico implements Initializable{
         lstNomeCliente.getItems().clear();
         Resultado r1 = repositorioClientes.listarClientes();
 
-        if(r1.foiSucesso()){
+        if (r1.foiSucesso()) {
             List<Cliente> list = (List) r1.comoSucesso().getObj();
             lstNomeCliente.getItems().addAll(list);
-        }else{
+        } else {
             Alert alert = new Alert(AlertType.ERROR, r1.getMsg());
             alert.showAndWait();
         }
 
         Resultado r2 = repositorioTipo.listarTipos();
-        if(r2.foiSucesso()){
+        if (r2.foiSucesso()) {
             List<Tipo> list = (List) r2.comoSucesso().getObj();
             cbTipo.getItems().addAll(list);
-        }else{
+        } else {
             Alert alert = new Alert(AlertType.ERROR, r2.getMsg());
             alert.showAndWait();
         }

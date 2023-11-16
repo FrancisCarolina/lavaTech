@@ -1,6 +1,7 @@
 package ifpr.pgua.eic.tarefas.controllers;
 
 import ifpr.pgua.eic.tarefas.App;
+import ifpr.pgua.eic.tarefas.model.repositories.RepositorioServico;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -9,12 +10,12 @@ import javafx.scene.input.MouseEvent;
 
 public class ListarServico {
 
-    // private RepositorioS
+    private RepositorioServico repositorioServico;
     
 
-    // public ListarCliente(RepositorioClientes repositorioClientes) {
-    //     this.repositorioClientes = repositorioClientes;
-    // }
+    public ListarServico(RepositorioServico repositorioServico) {
+        this.repositorioServico = repositorioServico;
+    }
 
     @FXML
     private TableColumn<?, ?> tbcCliente;
