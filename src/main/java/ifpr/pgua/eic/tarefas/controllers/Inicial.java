@@ -44,8 +44,8 @@ public class Inicial {
 
     @FXML
     void listar() {
-
-    }
+        App.pushScreen("LISTARSERVICO");
+    }   
 
     @FXML
     void listarServico() {
