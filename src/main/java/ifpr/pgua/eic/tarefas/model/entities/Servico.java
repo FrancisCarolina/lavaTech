@@ -1,5 +1,6 @@
 package ifpr.pgua.eic.tarefas.model.entities;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Servico {
@@ -10,10 +11,10 @@ public class Servico {
     private float custo;
     private boolean efetuado;
     private boolean pago;
-    private Date dataAgendamento;
+    private LocalDate dataAgendamento;
 
     public Servico(int id, Cliente cliente, LavaCar lavacar, Tipo tipo, float custo, boolean efetuado, boolean pago,
-            Date dataAgendamento) {
+            LocalDate dataAgendamento) {
         this.id = id;
         this.cliente = cliente;
         this.lavacar = lavacar;
@@ -25,7 +26,7 @@ public class Servico {
     }
 
     public Servico(Cliente cliente, LavaCar lavacar, Tipo tipo, float custo, boolean efetuado, boolean pago,
-            Date dataAgendamento) {
+            LocalDate dataAgendamento) {
         this.cliente = cliente;
         this.lavacar = lavacar;
         this.tipo = tipo;
@@ -91,11 +92,11 @@ public class Servico {
         this.pago = pago;
     }
 
-    public Date getDataAgendamento() {
+    public LocalDate getDataAgendamento() {
         return dataAgendamento;
     }
 
-    public void setDataAgendamento(Date dataAgendamento) {
+    public void setDataAgendamento(LocalDate dataAgendamento) {
         this.dataAgendamento = dataAgendamento;
     }
 }
