@@ -64,12 +64,14 @@ public class CadastrarNovoCliente {
 
     @FXML
     void listar(ActionEvent event) {
-
+        App.popScreen();
+        App.pushScreen("LISTARSERVICO");
     }
 
     @FXML
     void clientes(ActionEvent event) {
-
+        App.popScreen();
+        App.pushScreen("CADASTRARCLIENTE");
     }
 
     @FXML
@@ -85,7 +87,8 @@ public class CadastrarNovoCliente {
 
     @FXML
     void excluirCliente(MouseEvent event) {
-
+        App.popScreen();
+        App.pushScreen("EXCLUIRCLIENTE");
     }
 
     @FXML

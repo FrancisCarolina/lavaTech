@@ -59,6 +59,8 @@ public class ListarCliente implements Initializable{
 
     @FXML
     void listar(ActionEvent event) {
+        App.popScreen();
+        App.pushScreen("LISTARSERVICO");
 
     }
 

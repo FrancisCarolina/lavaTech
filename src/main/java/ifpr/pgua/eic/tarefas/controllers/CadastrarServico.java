@@ -90,11 +90,13 @@ public class CadastrarServico implements Initializable {
 
     @FXML
     void listar(ActionEvent event) {
-
+        App.popScreen();
+        App.pushScreen("LISTARSERVICO");
     }
 
     @FXML
     void novoCliente(ActionEvent event) {
+        App.popScreen();
         App.pushScreen("CADASTRARCLIENTE");
     }
 

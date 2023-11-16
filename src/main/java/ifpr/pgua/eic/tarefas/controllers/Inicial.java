@@ -49,7 +49,7 @@ public class Inicial {
 
     @FXML
     void listarServico() {
-
+        App.pushScreen("LISTARSERVICO");
     }
 
     @FXML

@@ -40,7 +40,8 @@ public class Perfil implements Initializable {
 
     @FXML
     void listar(ActionEvent event) {
-
+        App.popScreen();
+        App.pushScreen("LISTARSERVICO");
     }
 
     @FXML

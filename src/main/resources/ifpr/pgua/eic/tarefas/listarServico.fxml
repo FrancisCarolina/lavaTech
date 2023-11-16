@@ -70,7 +70,7 @@
                               <Insets left="20.0" right="20.0" />
                            </VBox.margin>
                         </TableView>
-                        <Hyperlink onAction="#voltar" text="voltar">
+                        <Hyperlink onAction="#voltar" text="Voltar">
                            <VBox.margin>
                               <Insets left="20.0" />
                            </VBox.margin>

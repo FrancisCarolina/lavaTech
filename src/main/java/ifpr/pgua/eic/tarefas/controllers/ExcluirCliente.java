@@ -35,7 +35,6 @@ public class ExcluirCliente implements Initializable {
         this.repositorioClientes = repositorioClientes;
     }
 
-
     @FXML
     void agendar(ActionEvent event) {
         App.popScreen();
@@ -76,7 +75,8 @@ public class ExcluirCliente implements Initializable {
 
     @FXML
     void listar(ActionEvent event) {
-
+        App.popScreen();
+        App.pushScreen("LISTARSERVICO");
     }
     @FXML
     void editarCliente(MouseEvent event) {
