@@ -54,7 +54,21 @@ public class CadastrarServico implements Initializable{
 
     @FXML
     void cadastrar(ActionEvent event) {
+        /*String custo = tfCusto.getText();
 
+        Resultado resultado = repositorio.cadastrarCliente(nome, contato);
+
+        Alert alert;
+
+        if (resultado.foiErro()) {
+            alert = new Alert(AlertType.ERROR, resultado.getMsg());
+        } else {
+            tfContato.clear();
+            tfNomeCliente.clear();
+            alert = new Alert(AlertType.INFORMATION, resultado.getMsg());
+        }
+
+        alert.showAndWait();*/
     }
 
     @FXML
