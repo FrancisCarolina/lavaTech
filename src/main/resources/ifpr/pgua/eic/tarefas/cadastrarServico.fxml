@@ -110,7 +110,7 @@
                                           <Insets bottom="5.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <TextField fx:id="tfPesquisarCliente" />
+                                    <TextField fx:id="tfPesquisarCliente" onKeyReleased="#pesquisar" />
                                  </children>
                                  <HBox.margin>
                                     <Insets right="20.0" />

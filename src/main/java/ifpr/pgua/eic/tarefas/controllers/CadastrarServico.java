@@ -25,6 +25,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 public class CadastrarServico implements Initializable {
@@ -86,6 +87,22 @@ public class CadastrarServico implements Initializable {
         }
 
         alert.showAndWait();
+    }
+
+    @FXML
+    void pesquisar(KeyEvent event) {
+        lstNomeCliente.getItems().clear();
+        Resultado r1 = repositorioClientes.listarClientes();
+
+        if (r1.foiSucesso()) {
+            List<Cliente> clientes = (List) r1.comoSucesso().getObj();
+
+            for (int i = 0; i < clientes.size(); i++) {
+                if (clientes.get(i).getNome().contains(tfPesquisarCliente.getText())) {
+                    lstNomeCliente.getItems().add(clientes.get(i));
+                }
+            }
+        }
     }
 
     @FXML
