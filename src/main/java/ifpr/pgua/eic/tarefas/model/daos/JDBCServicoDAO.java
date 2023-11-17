@@ -69,9 +69,11 @@ public class JDBCServicoDAO implements ServicoDAO {
     }
 
     @Override
-    public Resultado listar() {
+    public Resultado listar(int idLogado) {
         try (Connection con = fabrica.getConnection()) {
-            PreparedStatement pstm = con.prepareStatement("SELECT * FROM servico");
+            PreparedStatement pstm = con.prepareStatement("SELECT * FROM servico where idLavacar = ?");
+
+            pstm.setInt(1, idLogado);
 
             ResultSet rs = pstm.executeQuery();
 

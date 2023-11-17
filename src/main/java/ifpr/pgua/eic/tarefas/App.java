@@ -43,7 +43,7 @@ public class App extends BaseAppNavigator {
         private RepositorioTipo repositorioTipo = new RepositorioTipo(tipoDAO);
 
         private ServicoDAO servicoDAO = new JDBCServicoDAO(FabricaConexoes.getInstance());
-        private RepositorioServico repositorioServico = new RepositorioServico(servicoDAO, clienteDAO, tipoDAO, lavacarDAO);
+        private RepositorioServico repositorioServico = new RepositorioServico(servicoDAO, clienteDAO, tipoDAO, lavacarDAO, logado);
 
         private static LavaCar logado = null;
 
@@ -58,6 +58,7 @@ public class App extends BaseAppNavigator {
         }
 
         public static void setLogado(LavaCar log) {
+                System.out.println(logado);
                 logado = log;
         }
 
@@ -97,7 +98,7 @@ public class App extends BaseAppNavigator {
                 registraTela("EDITARCLIENTE",
                                 new ScreenRegistryFXML(App.class, "editarCliente.fxml",
                                                 o -> new EditarCliente(repositorioClientes)));
-                registraTela("LISTARSERVICO", new ScreenRegistryFXML(App.class, "listarServico.fxml", o -> new ListarServico(repositorioServico)));
+                registraTela("LISTARSERVICO", new ScreenRegistryFXML(App.class, "listarServico.fxml", o -> new ListarServico(repositorioServico, logado)));
         }
 
 }

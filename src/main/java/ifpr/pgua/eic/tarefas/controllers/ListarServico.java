@@ -1,14 +1,17 @@
 package ifpr.pgua.eic.tarefas.controllers;
 
 import java.net.URL;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import com.github.hugoperlin.results.Resultado;
 
 import ifpr.pgua.eic.tarefas.App;
+import ifpr.pgua.eic.tarefas.model.entities.LavaCar;
 import ifpr.pgua.eic.tarefas.model.entities.Servico;
 import ifpr.pgua.eic.tarefas.model.repositories.RepositorioServico;
 import javafx.beans.property.SimpleStringProperty;
@@ -25,9 +28,11 @@ import javafx.scene.input.MouseEvent;
 public class ListarServico implements Initializable{
 
     private RepositorioServico repositorioServico;
+    private LavaCar logado;
 
-    public ListarServico(RepositorioServico repositorioServico) {
+    public ListarServico(RepositorioServico repositorioServico, LavaCar logado) {
         this.repositorioServico = repositorioServico;
+        this.logado = logado;
     }
 
     @FXML
@@ -96,6 +101,28 @@ public class ListarServico implements Initializable{
     void voltar(ActionEvent event) {
         App.popScreen();
     }
+    public String formatarCusto(String valorString) {
+
+        // Removendo o símbolo de moeda e espaços
+        String valorSemSimbolo = valorString.replaceAll("[^\\d.,]", "");
+
+        try {
+            // Convertendo a string para um número
+            double valorNumerico = NumberFormat.getNumberInstance(Locale.US).parse(valorSemSimbolo).doubleValue();
+
+            // Criando um formato desejado com vírgula como separador decimal
+            NumberFormat formato = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+
+            // Formatando o número para a moeda brasileira (BRL)
+            String valorFormatado = formato.format(valorNumerico);
+
+            // Exibindo o resultado
+            return valorFormatado;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return valorString;
+    }
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -105,13 +132,13 @@ public class ListarServico implements Initializable{
         //configurar a renderização das colunas
 
         tbcCliente.setCellValueFactory(celula->new SimpleStringProperty(celula.getValue().getCliente().getNome()));
-        tbcCusto.setCellValueFactory(celula->new SimpleStringProperty("R$ "+celula.getValue().getCusto()));
+        tbcCusto.setCellValueFactory(celula->new SimpleStringProperty(formatarCusto("R$ "+celula.getValue().getCusto())));
         tbcDataAgendada.setCellValueFactory(celula->new SimpleStringProperty(celula.getValue().getDataAgendamento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
         tbcPago.setCellValueFactory(celula->new SimpleStringProperty(celula.getValue().isPago()?"SIM": "NÃO"));
         tbcRealizado.setCellValueFactory(celula->new SimpleStringProperty(celula.getValue().isEfetuado()?"SIM":"NÃO"));
         tbcTipoServico.setCellValueFactory(celula -> new SimpleStringProperty(celula.getValue().getTipo().getNome()));
 
-        Resultado rs = repositorioServico.listar();
+        Resultado rs = repositorioServico.listar(logado.getId());
 
         if(rs.foiErro()){
             Alert alert = new Alert(AlertType.ERROR,rs.getMsg());

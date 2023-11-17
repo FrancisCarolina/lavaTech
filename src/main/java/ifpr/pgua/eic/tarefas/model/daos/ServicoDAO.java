@@ -8,7 +8,7 @@ public interface ServicoDAO {
 
     Resultado criar(Servico servico);
 
-    Resultado listar();
+    Resultado listar(int idLogado);
 
     Resultado getById(int id);
 

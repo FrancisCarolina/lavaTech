@@ -20,7 +20,7 @@ public class RepositorioServico {
     private TipoDAO tipoDAO;
     private LavaCarDAO lavacarDAO;
 
-    public RepositorioServico(ServicoDAO dao,ClienteDAO clienteDAO, TipoDAO tipoDAO, LavaCarDAO lavacarDAO) {
+    public RepositorioServico(ServicoDAO dao,ClienteDAO clienteDAO, TipoDAO tipoDAO, LavaCarDAO lavacarDAO, LavaCar logado) {
         this.dao = dao;
         this.clienteDAO = clienteDAO;
         this.tipoDAO = tipoDAO;
@@ -46,9 +46,8 @@ public class RepositorioServico {
         return dao.criar(servico);
     }
 
-    public Resultado listar() {
-        
-        Resultado resultado = dao.listar();
+    public Resultado listar(int idLogado) {
+        Resultado resultado = dao.listar(idLogado);
 
         if(resultado.foiSucesso()){
             //iremos finalizar de montar os objetos
