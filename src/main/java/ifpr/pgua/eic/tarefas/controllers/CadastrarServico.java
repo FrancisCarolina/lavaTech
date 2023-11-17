@@ -83,6 +83,7 @@ public class CadastrarServico implements Initializable {
             cbTipo.getSelectionModel().clearSelection();
             lstNomeCliente.getSelectionModel().clearSelection();
             taClientes.clear();
+            tfPesquisarCliente.clear();
             alert = new Alert(AlertType.INFORMATION, resultado.getMsg());
         }
 
@@ -98,7 +99,7 @@ public class CadastrarServico implements Initializable {
             List<Cliente> clientes = (List) r1.comoSucesso().getObj();
 
             for (int i = 0; i < clientes.size(); i++) {
-                if (clientes.get(i).getNome().contains(tfPesquisarCliente.getText())) {
+                if (clientes.get(i).getNome().toLowerCase().contains(tfPesquisarCliente.getText().toLowerCase())) {
                     lstNomeCliente.getItems().add(clientes.get(i));
                 }
             }
