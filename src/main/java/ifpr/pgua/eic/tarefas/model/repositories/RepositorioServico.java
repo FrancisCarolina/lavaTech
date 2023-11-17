@@ -93,4 +93,16 @@ public class RepositorioServico {
 
         return Resultado.erro("Serviço inválido");
     }
+
+    public Resultado marcarComoEfetuado(Servico servico) {
+        if (servico != null) {
+            Resultado r = dao.marcarComoEfetuado(servico);
+
+            System.out.println(servico.getTipo());
+
+            return r;
+        }
+
+        return Resultado.erro("Serviço inválido");
+    }
 }

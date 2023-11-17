@@ -83,7 +83,21 @@ public class ListarServico implements Initializable {
 
     @FXML
     void marcarComoEfetuado(ActionEvent event) {
+        Servico servico = tbvServicos.getSelectionModel().getSelectedItem();
 
+        Resultado resultado = repositorioServico.marcarComoEfetuado(servico);
+
+        Alert alert;
+
+        if (resultado.foiErro()) {
+            alert = new Alert(AlertType.ERROR, resultado.getMsg());
+        } else {
+            initialize(null, null);
+            alert = new Alert(AlertType.INFORMATION, resultado.getMsg());
+        }
+
+        alert.showAndWait();
+        tbvServicos.refresh();
     }
 
     @FXML

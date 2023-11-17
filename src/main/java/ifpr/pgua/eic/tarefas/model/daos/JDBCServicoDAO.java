@@ -125,6 +125,29 @@ public class JDBCServicoDAO implements ServicoDAO {
     }
 
     @Override
+    public Resultado marcarComoEfetuado(Servico servico) {
+        // UPDATE servico SET efetuado = 1 WHERE id = ?
+        // try with resources, para não precisar fechar a conexao
+        try (Connection con = fabrica.getConnection()) {
+
+            // Preparar o comando sql
+            PreparedStatement pstm = con.prepareStatement("UPDATE servico SET efetuado = 1 WHERE id = ?",
+                    Statement.RETURN_GENERATED_KEYS);
+            // Ajustar os parâmetros
+            pstm.setInt(1, servico.getId());
+            // Executar o comando
+            int ret = pstm.executeUpdate();
+
+            if (ret > 0) {
+                return Resultado.sucesso("Marcado como efetuado!", servico);
+            }
+            return Resultado.erro("Erro desconhecido!");
+        } catch (SQLException e) {
+            return Resultado.erro(e.getMessage());
+        }
+    }
+
+    @Override
     public Resultado getById(int id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getById'");

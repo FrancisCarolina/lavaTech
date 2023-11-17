@@ -20,4 +20,6 @@ public interface ServicoDAO {
 
     Resultado marcarComoPago(Servico servico);
 
+    Resultado marcarComoEfetuado(Servico servico);
+
 }
