@@ -20,6 +20,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -85,18 +86,26 @@ public class ListarServico implements Initializable {
     void marcarComoEfetuado(ActionEvent event) {
         Servico servico = tbvServicos.getSelectionModel().getSelectedItem();
 
-        Resultado resultado = repositorioServico.marcarComoEfetuado(servico);
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Confirmação");
+        alert.setHeaderText("Serviço efetuado?");
 
-        Alert alert;
+        alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.CANCEL);
 
-        if (resultado.foiErro()) {
-            alert = new Alert(AlertType.ERROR, resultado.getMsg());
-        } else {
-            initialize(null, null);
-            alert = new Alert(AlertType.INFORMATION, resultado.getMsg());
-        }
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                Resultado resultado = repositorioServico.marcarComoPago(servico);
 
-        alert.showAndWait();
+                if (resultado.foiSucesso()) {
+                    Alert alertErro = new Alert(AlertType.INFORMATION, resultado.getMsg());
+                    alertErro.showAndWait();
+                } else {
+                    Alert alertErro = new Alert(AlertType.ERROR, resultado.getMsg());
+                    alertErro.showAndWait();
+                }
+            }
+        });
+
         tbvServicos.refresh();
     }
 
@@ -104,18 +113,26 @@ public class ListarServico implements Initializable {
     void marcarComoPago(ActionEvent event) {
         Servico servico = tbvServicos.getSelectionModel().getSelectedItem();
 
-        Resultado resultado = repositorioServico.marcarComoPago(servico);
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Confirmação");
+        alert.setHeaderText("Pagamento efetuado?");
 
-        Alert alert;
+        alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.CANCEL);
 
-        if (resultado.foiErro()) {
-            alert = new Alert(AlertType.ERROR, resultado.getMsg());
-        } else {
-            initialize(null, null);
-            alert = new Alert(AlertType.INFORMATION, resultado.getMsg());
-        }
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                Resultado resultado = repositorioServico.marcarComoPago(servico);
 
-        alert.showAndWait();
+                if (resultado.foiSucesso()) {
+                    Alert alertErro = new Alert(AlertType.INFORMATION, resultado.getMsg());
+                    alertErro.showAndWait();
+                } else {
+                    Alert alertErro = new Alert(AlertType.ERROR, resultado.getMsg());
+                    alertErro.showAndWait();
+                }
+            }
+        });
+
         tbvServicos.refresh();
     }
 
@@ -156,7 +173,9 @@ public class ListarServico implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         cbFiltro.getItems().clear();
-        cbFiltro.getItems().addAll("Todos", "Somente os Próximos", "Efetuados", "Não Efetuados", "Pagos", "Não Pagos");
+        cbFiltro.getItems().addAll("Todos", "Somente os Próximos", "Efetuados",
+                "Não Efetuados", "Pagos", "Não Pagos");
+        cbFiltro.getSelectionModel().select("Todos");
 
         // configurar a renderização das colunas
 
