@@ -8,6 +8,7 @@ import java.sql.Statement;
 
 import com.github.hugoperlin.results.Resultado;
 
+import ifpr.pgua.eic.tarefas.model.entities.Cliente;
 import ifpr.pgua.eic.tarefas.model.entities.LavaCar;
 import ifpr.pgua.eic.tarefas.utils.DBUtils;
 
@@ -55,8 +56,31 @@ public class JDBCLavaCarDAO implements LavaCarDAO{
 
     @Override
     public Resultado getById(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getById'");
+        
+      try (Connection con = fabrica.getConnection()) {
+
+          PreparedStatement pstm = con.prepareStatement("SELECT * FROM lavacar WHERE id=?");
+
+          pstm.setInt(1, id);
+
+          ResultSet rs = pstm.executeQuery();
+          
+          if(rs.next()){
+              String nome = rs.getString("nome");
+              String login = rs.getString("login");
+              String senha = rs.getString("senha");
+
+              LavaCar lc = new LavaCar(id,nome, login, senha);
+
+              return Resultado.sucesso("LavaCar encontrado", lc);
+          }else{
+              return Resultado.erro("LavaCar não encontrado!");
+          }
+
+
+      } catch (SQLException e) {
+          return Resultado.erro(e.getMessage());
+      }
     }
 
     @Override
@@ -123,6 +147,26 @@ public class JDBCLavaCarDAO implements LavaCarDAO{
             }
             
             return Resultado.erro("Login ou Senha inválida!");
+        } catch (SQLException e) {
+            return Resultado.erro(e.getMessage());
+        }
+    }
+
+    @Override
+    public Resultado buscarLavacarServico(int id) {
+        try (Connection con = fabrica.getConnection()) {
+
+            PreparedStatement pstm = con.prepareStatement("SELECT idLavacar FROM servico WHERE id=?");
+  
+            pstm.setInt(1, id);
+  
+            ResultSet rs = pstm.executeQuery();
+            rs.next();
+  
+            int idLavacar = rs.getInt("idLavacar");
+            return getById(idLavacar);
+  
+  
         } catch (SQLException e) {
             return Resultado.erro(e.getMessage());
         }

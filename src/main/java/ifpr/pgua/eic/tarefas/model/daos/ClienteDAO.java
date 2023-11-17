@@ -15,4 +15,6 @@ public interface ClienteDAO {
   Resultado atualizar(int id, Cliente novo);
 
   Resultado deletar(int id);
+
+Resultado buscarClienteServico(int id);
 }

@@ -2,12 +2,14 @@ package ifpr.pgua.eic.tarefas.model.daos;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.github.hugoperlin.results.Resultado;
 import java.sql.Statement;
 import java.time.LocalDate;
-
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import ifpr.pgua.eic.tarefas.model.entities.Servico;
 import ifpr.pgua.eic.tarefas.utils.DBUtils;
 
@@ -55,11 +57,44 @@ public class JDBCServicoDAO implements ServicoDAO {
             return Resultado.erro(e.getMessage());
         }
     }
+    public LocalDate StringToLocalDate(String dataString) {
+
+        // Criando um formato desejado
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-M-yyyy");
+
+        // Parse da String para LocalDate
+        LocalDate dataFormatada = LocalDate.parse(dataString, formatter);
+        return dataFormatada;
+            
+    }
 
     @Override
     public Resultado listar() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'listar'");
+        try (Connection con = fabrica.getConnection()) {
+            PreparedStatement pstm = con.prepareStatement("SELECT * FROM servico");
+
+            ResultSet rs = pstm.executeQuery();
+
+            ArrayList<Servico> lista = new ArrayList<>();
+
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String dataAgendada = rs.getString("dataAgendada");
+                Float custo = rs.getFloat("custo");
+                int efetuado = rs.getInt("efetuado");
+                int pago = rs.getInt("pago");
+
+                LocalDate dateLocal = StringToLocalDate(dataAgendada);
+
+                Servico servico = new Servico(id, null, null, null,custo, efetuado==1?true:false, pago==1?true:false,dateLocal);
+                lista.add(servico);
+
+            }
+            
+            return Resultado.sucesso("Lista de servicos", lista);
+        } catch (SQLException e) {
+            return Resultado.erro(e.getMessage());
+        }
     }
 
     @Override

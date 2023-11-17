@@ -12,4 +12,5 @@ public interface LavaCarDAO {
     Resultado atualizar(int id, LavaCar novo);
     Resultado deletar(int id);
     Resultado logar(String login, String senha);
+    Resultado buscarLavacarServico(int id);
 }

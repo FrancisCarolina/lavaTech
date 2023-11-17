@@ -43,7 +43,7 @@ public class App extends BaseAppNavigator {
         private RepositorioTipo repositorioTipo = new RepositorioTipo(tipoDAO);
 
         private ServicoDAO servicoDAO = new JDBCServicoDAO(FabricaConexoes.getInstance());
-        private RepositorioServico repositorioServico = new RepositorioServico(servicoDAO);
+        private RepositorioServico repositorioServico = new RepositorioServico(servicoDAO, clienteDAO, tipoDAO, lavacarDAO);
 
         private static LavaCar logado = null;
 

@@ -72,10 +72,35 @@ public class JDBCClienteDAO implements ClienteDAO {
         }
   }
 
+  
   @Override
-  public Resultado getById(int id) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getById'");
+  public Resultado getById(int id){
+
+      try (Connection con = fabrica.getConnection()) {
+
+          PreparedStatement pstm = con.prepareStatement("SELECT * FROM cliente WHERE id=?");
+
+          pstm.setInt(1, id);
+
+          ResultSet rs = pstm.executeQuery();
+          
+          if(rs.next()){
+              String nome = rs.getString("nome");
+              String contato = rs.getString("contato");
+
+              Cliente cliente = new Cliente(id,nome, contato);
+
+              return Resultado.sucesso("Cliente encontrado", cliente);
+          }else{
+              return Resultado.erro("Cliente não encontrado!");
+          }
+
+
+      } catch (SQLException e) {
+          return Resultado.erro(e.getMessage());
+      }
+
+
   }
 
   @Override
@@ -120,6 +145,30 @@ public class JDBCClienteDAO implements ClienteDAO {
         } catch (SQLException e) {
             return Resultado.erro(e.getMessage());
         }
+  }
+
+  
+  @Override
+  public Resultado buscarClienteServico(int id) {
+      
+      try (Connection con = fabrica.getConnection()) {
+
+          PreparedStatement pstm = con.prepareStatement("SELECT idCliente FROM servico WHERE id=?");
+
+          pstm.setInt(1, id);
+
+          ResultSet rs = pstm.executeQuery();
+          rs.next();
+
+          int idCliente = rs.getInt("idCliente");
+          return getById(idCliente);
+
+
+      } catch (SQLException e) {
+          return Resultado.erro(e.getMessage());
+      }
+
+
   }
 
 }
