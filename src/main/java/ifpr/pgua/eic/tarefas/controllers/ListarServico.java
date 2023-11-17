@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import com.github.hugoperlin.results.Resultado;
 
 import ifpr.pgua.eic.tarefas.App;
+import ifpr.pgua.eic.tarefas.model.entities.Cliente;
 import ifpr.pgua.eic.tarefas.model.entities.LavaCar;
 import ifpr.pgua.eic.tarefas.model.entities.Servico;
 import ifpr.pgua.eic.tarefas.model.repositories.RepositorioServico;
@@ -79,7 +80,28 @@ public class ListarServico implements Initializable {
 
     @FXML
     void excluirServico(ActionEvent event) {
+        Servico s = tbvServicos.getSelectionModel().getSelectedItem();
+        if (s != null) {
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Confirmação");
+            alert.setHeaderText("Tem certeza que deseja excluir?");
 
+            alert.getButtonTypes().setAll(ButtonType.OK, ButtonType.CANCEL);
+
+            alert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    Resultado r = repositorioServico.excluirServico(s);
+                    if (r.foiSucesso()) {
+                        Alert alertErro = new Alert(AlertType.INFORMATION, r.getMsg());
+                        alertErro.showAndWait();
+                        initialize(null, null);
+                    } else {
+                        Alert alertErro = new Alert(AlertType.ERROR, r.getMsg());
+                        alertErro.showAndWait();
+                    }
+                }
+            });
+        }
     }
 
     @FXML

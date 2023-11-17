@@ -105,4 +105,8 @@ public class RepositorioServico {
 
         return Resultado.erro("Serviço inválido");
     }
+
+    public Resultado excluirServico(Servico s) {
+        return dao.deletar(s.getId());
+    }
 }
