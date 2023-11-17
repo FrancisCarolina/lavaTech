@@ -25,7 +25,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 
-public class ListarServico implements Initializable{
+public class ListarServico implements Initializable {
 
     private RepositorioServico repositorioServico;
     private LavaCar logado;
@@ -88,7 +88,21 @@ public class ListarServico implements Initializable{
 
     @FXML
     void marcarComoPago(ActionEvent event) {
+        Servico servico = tbvServicos.getSelectionModel().getSelectedItem();
 
+        Resultado resultado = repositorioServico.marcarComoPago(servico);
+
+        Alert alert;
+
+        if (resultado.foiErro()) {
+            alert = new Alert(AlertType.ERROR, resultado.getMsg());
+        } else {
+            initialize(null, null);
+            alert = new Alert(AlertType.INFORMATION, resultado.getMsg());
+        }
+
+        alert.showAndWait();
+        tbvServicos.refresh();
     }
 
     @FXML
@@ -101,6 +115,7 @@ public class ListarServico implements Initializable{
     void voltar(ActionEvent event) {
         App.popScreen();
     }
+
     public String formatarCusto(String valorString) {
 
         // Removendo o símbolo de moeda e espaços
@@ -128,26 +143,29 @@ public class ListarServico implements Initializable{
     public void initialize(URL arg0, ResourceBundle arg1) {
         cbFiltro.getItems().clear();
         cbFiltro.getItems().addAll("Todos", "Somente os Próximos", "Efetuados", "Não Efetuados", "Pagos", "Não Pagos");
-    
-        //configurar a renderização das colunas
 
-        tbcCliente.setCellValueFactory(celula->new SimpleStringProperty(celula.getValue().getCliente().getNome()));
-        tbcCusto.setCellValueFactory(celula->new SimpleStringProperty(formatarCusto("R$ "+celula.getValue().getCusto())));
-        tbcDataAgendada.setCellValueFactory(celula->new SimpleStringProperty(celula.getValue().getDataAgendamento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
-        tbcPago.setCellValueFactory(celula->new SimpleStringProperty(celula.getValue().isPago()?"SIM": "NÃO"));
-        tbcRealizado.setCellValueFactory(celula->new SimpleStringProperty(celula.getValue().isEfetuado()?"SIM":"NÃO"));
+        // configurar a renderização das colunas
+
+        tbcCliente.setCellValueFactory(celula -> new SimpleStringProperty(celula.getValue().getCliente().getNome()));
+        tbcCusto.setCellValueFactory(
+                celula -> new SimpleStringProperty(formatarCusto("R$ " + celula.getValue().getCusto())));
+        tbcDataAgendada.setCellValueFactory(celula -> new SimpleStringProperty(
+                celula.getValue().getDataAgendamento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
+        tbcPago.setCellValueFactory(celula -> new SimpleStringProperty(celula.getValue().isPago() ? "SIM" : "NÃO"));
+        tbcRealizado.setCellValueFactory(
+                celula -> new SimpleStringProperty(celula.getValue().isEfetuado() ? "SIM" : "NÃO"));
         tbcTipoServico.setCellValueFactory(celula -> new SimpleStringProperty(celula.getValue().getTipo().getNome()));
 
         Resultado rs = repositorioServico.listar(logado.getId());
 
-        if(rs.foiErro()){
-            Alert alert = new Alert(AlertType.ERROR,rs.getMsg());
+        if (rs.foiErro()) {
+            Alert alert = new Alert(AlertType.ERROR, rs.getMsg());
             alert.showAndWait();
             return;
         }
 
-        List<Servico> lista = (List)rs.comoSucesso().getObj();
-        
+        List<Servico> lista = (List) rs.comoSucesso().getObj();
+
         tbvServicos.getItems().addAll(lista);
     }
 

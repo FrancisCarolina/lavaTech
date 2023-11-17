@@ -20,7 +20,8 @@ public class RepositorioServico {
     private TipoDAO tipoDAO;
     private LavaCarDAO lavacarDAO;
 
-    public RepositorioServico(ServicoDAO dao,ClienteDAO clienteDAO, TipoDAO tipoDAO, LavaCarDAO lavacarDAO, LavaCar logado) {
+    public RepositorioServico(ServicoDAO dao, ClienteDAO clienteDAO, TipoDAO tipoDAO, LavaCarDAO lavacarDAO,
+            LavaCar logado) {
         this.dao = dao;
         this.clienteDAO = clienteDAO;
         this.tipoDAO = tipoDAO;
@@ -49,35 +50,47 @@ public class RepositorioServico {
     public Resultado listar(int idLogado) {
         Resultado resultado = dao.listar(idLogado);
 
-        if(resultado.foiSucesso()){
-            //iremos finalizar de montar os objetos
-            List<Servico> lista = (List<Servico>)resultado.comoSucesso().getObj();
-            
-            for(Servico servico:lista){
+        if (resultado.foiSucesso()) {
+            // iremos finalizar de montar os objetos
+            List<Servico> lista = (List<Servico>) resultado.comoSucesso().getObj();
+
+            for (Servico servico : lista) {
                 Resultado r1 = clienteDAO.buscarClienteServico(servico.getId());
-                if(r1.foiErro()){
+                if (r1.foiErro()) {
                     return r1;
                 }
-                Cliente cliente = (Cliente)r1.comoSucesso().getObj();
+                Cliente cliente = (Cliente) r1.comoSucesso().getObj();
                 servico.setCliente(cliente);
 
                 Resultado r2 = tipoDAO.buscarTipoServico(servico.getId());
-                if(r2.foiErro()){
+                if (r2.foiErro()) {
                     return r2;
                 }
-                Tipo tipo = (Tipo)r2.comoSucesso().getObj();
+                Tipo tipo = (Tipo) r2.comoSucesso().getObj();
                 servico.setTipo(tipo);
 
                 Resultado r3 = lavacarDAO.buscarLavacarServico(servico.getId());
-                if(r3.foiErro()){
+                if (r3.foiErro()) {
                     return r3;
                 }
-                LavaCar lc = (LavaCar)r3.comoSucesso().getObj();
+                LavaCar lc = (LavaCar) r3.comoSucesso().getObj();
                 servico.setLavacar(lc);
             }
 
         }
 
         return resultado;
+    }
+
+    public Resultado marcarComoPago(Servico servico) {
+        if (servico != null) {
+            Resultado r = dao.marcarComoPago(servico);
+
+            System.out.println(servico.getTipo());
+
+            return r;
+        }
+
+        return Resultado.erro("Serviço inválido");
     }
 }

@@ -57,6 +57,7 @@ public class JDBCServicoDAO implements ServicoDAO {
             return Resultado.erro(e.getMessage());
         }
     }
+
     public LocalDate StringToLocalDate(String dataString) {
 
         // Criando um formato desejado
@@ -65,7 +66,7 @@ public class JDBCServicoDAO implements ServicoDAO {
         // Parse da String para LocalDate
         LocalDate dataFormatada = LocalDate.parse(dataString, formatter);
         return dataFormatada;
-            
+
     }
 
     @Override
@@ -79,7 +80,7 @@ public class JDBCServicoDAO implements ServicoDAO {
 
             ArrayList<Servico> lista = new ArrayList<>();
 
-            while(rs.next()){
+            while (rs.next()) {
                 int id = rs.getInt("id");
                 String dataAgendada = rs.getString("dataAgendada");
                 Float custo = rs.getFloat("custo");
@@ -88,12 +89,36 @@ public class JDBCServicoDAO implements ServicoDAO {
 
                 LocalDate dateLocal = StringToLocalDate(dataAgendada);
 
-                Servico servico = new Servico(id, null, null, null,custo, efetuado==1?true:false, pago==1?true:false,dateLocal);
+                Servico servico = new Servico(id, null, null, null, custo, efetuado == 1 ? true : false,
+                        pago == 1 ? true : false, dateLocal);
                 lista.add(servico);
 
             }
-            
+
             return Resultado.sucesso("Lista de servicos", lista);
+        } catch (SQLException e) {
+            return Resultado.erro(e.getMessage());
+        }
+    }
+
+    @Override
+    public Resultado marcarComoPago(Servico servico) {
+        // UPDATE servico SET pago = 1 WHERE id = ?
+        // try with resources, para não precisar fechar a conexao
+        try (Connection con = fabrica.getConnection()) {
+
+            // Preparar o comando sql
+            PreparedStatement pstm = con.prepareStatement("UPDATE servico SET pago = 1 WHERE id = ?",
+                    Statement.RETURN_GENERATED_KEYS);
+            // Ajustar os parâmetros
+            pstm.setInt(1, servico.getId());
+            // Executar o comando
+            int ret = pstm.executeUpdate();
+
+            if (ret > 0) {
+                return Resultado.sucesso("Marcado como pago!", servico);
+            }
+            return Resultado.erro("Erro desconhecido!");
         } catch (SQLException e) {
             return Resultado.erro(e.getMessage());
         }

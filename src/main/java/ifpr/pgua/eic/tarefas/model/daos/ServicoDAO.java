@@ -18,4 +18,6 @@ public interface ServicoDAO {
 
     Resultado logar(String login, String senha);
 
+    Resultado marcarComoPago(Servico servico);
+
 }
