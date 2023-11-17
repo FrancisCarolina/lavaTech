@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifpr.pgua.eic.tarefas.controllers.ListarServico">
    <children>
       <HBox prefHeight="36.0" prefWidth="600.0" style="-fx-background-color: #cacaca;">
@@ -48,6 +47,9 @@
                      <font>
                         <Font size="22.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
                   </Label>
                   <VBox alignment="CENTER" prefHeight="424.0" prefWidth="568.0">
                      <children>

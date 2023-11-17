@@ -121,6 +121,8 @@ public class ListarServico implements Initializable {
                 if (resultado.foiSucesso()) {
                     Alert alertErro = new Alert(AlertType.INFORMATION, resultado.getMsg());
                     alertErro.showAndWait();
+                    initialize(null, null);
+
                 } else {
                     Alert alertErro = new Alert(AlertType.ERROR, resultado.getMsg());
                     alertErro.showAndWait();
