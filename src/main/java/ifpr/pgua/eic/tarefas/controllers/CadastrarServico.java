@@ -2,7 +2,6 @@ package ifpr.pgua.eic.tarefas.controllers;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 

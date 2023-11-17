@@ -1,15 +1,21 @@
 package ifpr.pgua.eic.tarefas.controllers;
 
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+
 import ifpr.pgua.eic.tarefas.App;
+import ifpr.pgua.eic.tarefas.model.entities.Servico;
 import ifpr.pgua.eic.tarefas.model.repositories.RepositorioServico;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 
-public class ListarServico {
+public class ListarServico implements Initializable{
 
     private RepositorioServico repositorioServico;
 
@@ -36,10 +42,10 @@ public class ListarServico {
     private TableColumn<?, ?> tbcTipoServico;
 
     @FXML
-    private TableView<?> tbvServicos;
+    private TableView<Servico> tbvServicos;
 
     @FXML
-    private ComboBox<?> cbFiltro;
+    private ComboBox<String> cbFiltro;
 
     @FXML
     void agendar(ActionEvent event) {
@@ -82,6 +88,12 @@ public class ListarServico {
     @FXML
     void voltar(ActionEvent event) {
         App.popScreen();
+    }
+
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        cbFiltro.getItems().clear();
+        cbFiltro.getItems().addAll("Todos", "Somente os Próximos", "Efetuados", "Não Efetuados", "Pagos", "Não Pagos");
     }
 
 }

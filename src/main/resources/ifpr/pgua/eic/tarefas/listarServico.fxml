@@ -14,7 +14,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <ScrollPane prefHeight="540.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifpr.pgua.eic.tarefas.controllers.ListarServico">
    <content>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="600.0">
@@ -62,15 +61,22 @@
                                     <Button mnemonicParsing="false" onAction="#excluirServico" text="Excluir Serviço" />
                                  </children>
                               </HBox>
-                              <ComboBox prefWidth="150.0" />
+                              <HBox alignment="CENTER_RIGHT" prefHeight="48.0" prefWidth="568.0">
+                                 <children>
+                                    <ComboBox fx:id="cbFiltro" prefWidth="150.0" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets right="20.0" />
+                                 </VBox.margin>
+                              </HBox>
                               <TableView fx:id="tbvServicos" prefHeight="312.0" prefWidth="528.0">
                                 <columns>
                                   <TableColumn fx:id="tbcCliente" text="Cliente" />
                                   <TableColumn fx:id="tbcTipoServico" prefWidth="131.0" text="Tipo do Serviço" />
+                                    <TableColumn fx:id="tbcCusto" prefWidth="83.0" text="Custo" />
                                     <TableColumn fx:id="tbcDataAgendada" prefWidth="94.0" text="Data Agendada" />
                                     <TableColumn fx:id="tbcPago" prefWidth="56.0" text="Pago" />
                                     <TableColumn fx:id="tbcRealizado" prefWidth="83.0" text="Realizado" />
-                                    <TableColumn fx:id="tbcCusto" prefWidth="83.0" text="Custo" />
                                 </columns>
                                  <VBox.margin>
                                     <Insets left="20.0" right="20.0" top="5.0" />
