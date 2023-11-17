@@ -92,7 +92,7 @@ public class CadastrarServico implements Initializable {
     @FXML
     void pesquisar(KeyEvent event) {
         lstNomeCliente.getItems().clear();
-        Resultado r1 = repositorioClientes.listarClientes();
+        Resultado r1 = repositorioClientes.listarClientes(logado);
 
         if (r1.foiSucesso()) {
             List<Cliente> clientes = (List) r1.comoSucesso().getObj();
@@ -149,7 +149,7 @@ public class CadastrarServico implements Initializable {
         cbTipo.getItems().clear();
         taClientes.setEditable(false);
         lstNomeCliente.getItems().clear();
-        Resultado r1 = repositorioClientes.listarClientes();
+        Resultado r1 = repositorioClientes.listarClientes(logado);
 
         if (r1.foiSucesso()) {
             List<Cliente> list = (List) r1.comoSucesso().getObj();

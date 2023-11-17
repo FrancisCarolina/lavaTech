@@ -88,16 +88,16 @@ public class App extends BaseAppNavigator {
                                                                 repositorioServico, logado)));
                 registraTela("CADASTRARCLIENTE",
                                 new ScreenRegistryFXML(App.class, "cadastrarNovoCliente.fxml",
-                                                o -> new CadastrarNovoCliente(repositorioClientes)));
+                                                o -> new CadastrarNovoCliente(repositorioClientes,logado)));
                 registraTela("LISTARCLIENTE",
                                 new ScreenRegistryFXML(App.class, "listarClientes.fxml",
-                                                o -> new ListarCliente(repositorioClientes)));
+                                                o -> new ListarCliente(repositorioClientes,logado)));
                 registraTela("EXCLUIRCLIENTE",
                                 new ScreenRegistryFXML(App.class, "excluirCliente.fxml",
-                                                o -> new ExcluirCliente(repositorioClientes)));
+                                                o -> new ExcluirCliente(repositorioClientes,logado)));
                 registraTela("EDITARCLIENTE",
                                 new ScreenRegistryFXML(App.class, "editarCliente.fxml",
-                                                o -> new EditarCliente(repositorioClientes)));
+                                                o -> new EditarCliente(repositorioClientes,logado)));
                 registraTela("LISTARSERVICO", new ScreenRegistryFXML(App.class, "listarServico.fxml", o -> new ListarServico(repositorioServico, logado)));
         }
 

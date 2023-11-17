@@ -4,16 +4,19 @@ public class Cliente {
   private int id;
   private String nome;
   private String contato;
+  private LavaCar lavaCar;
 
-  public Cliente(String nome, String contato) {
+  public Cliente(String nome, String contato, LavaCar lavaCar) {
     this.nome = nome;
     this.contato = contato;
+    this.lavaCar = lavaCar;
   }
 
-  public Cliente(int id, String nome, String contato) {
+  public Cliente(int id, String nome, String contato, LavaCar lavaCar) {
     this.id = id;
     this.nome = nome;
     this.contato = contato;
+    this.lavaCar = lavaCar;
   }
 
   public int getId() {
@@ -43,6 +46,14 @@ public class Cliente {
   @Override
   public String toString() {
     return "" + nome;
+  }
+
+  public LavaCar getLavaCar() {
+    return lavaCar;
+  }
+
+  public void setLavaCar(LavaCar lavaCar) {
+    this.lavaCar = lavaCar;
   }
 
 }

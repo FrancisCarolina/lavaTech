@@ -4,6 +4,7 @@ import com.github.hugoperlin.results.Resultado;
 
 import ifpr.pgua.eic.tarefas.model.daos.ClienteDAO;
 import ifpr.pgua.eic.tarefas.model.entities.Cliente;
+import ifpr.pgua.eic.tarefas.model.entities.LavaCar;
 
 public class RepositorioClientes {
   private ClienteDAO dao;
@@ -12,7 +13,7 @@ public class RepositorioClientes {
     this.dao = dao;
   }
 
-  public Resultado cadastrarCliente(String nome, String contato) {
+  public Resultado cadastrarCliente(String nome, String contato, LavaCar lavaCar) {
     if (nome.isEmpty() || nome.isBlank()) {
       return Resultado.erro("Nome inválido!");
     }
@@ -20,13 +21,13 @@ public class RepositorioClientes {
       return Resultado.erro("Contato inválido!");
     }
 
-    Cliente cliente = new Cliente(nome, contato);
+    Cliente cliente = new Cliente(nome, contato, lavaCar);
 
     return dao.criar(cliente);
   }
 
-  public Resultado listarClientes() {
-    return dao.listar();
+  public Resultado listarClientes(LavaCar logado) {
+    return dao.listar(logado.getId());
   }
 
   public Resultado excluirCliente(Cliente c) {

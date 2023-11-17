@@ -8,6 +8,7 @@ import com.github.hugoperlin.results.Resultado;
 
 import ifpr.pgua.eic.tarefas.App;
 import ifpr.pgua.eic.tarefas.model.entities.Cliente;
+import ifpr.pgua.eic.tarefas.model.entities.LavaCar;
 import ifpr.pgua.eic.tarefas.model.repositories.RepositorioClientes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,10 +31,12 @@ public class EditarCliente implements Initializable{
     private TextField tfNome;
 
     private RepositorioClientes repositorioClientes;
+    private LavaCar logado;
     
 
-    public EditarCliente(RepositorioClientes repositorioClientes) {
+    public EditarCliente(RepositorioClientes repositorioClientes, LavaCar logado) {
         this.repositorioClientes = repositorioClientes;
+        this.logado =logado;
     }
 
     @FXML
@@ -51,7 +54,7 @@ public class EditarCliente implements Initializable{
     @FXML
     void editar(ActionEvent event) {
         Cliente c = lstClientes.getSelectionModel().getSelectedItem();
-        Cliente novo = new Cliente(c.getId(), tfNome.getText(), tfContato.getText());
+        Cliente novo = new Cliente(c.getId(), tfNome.getText(), tfContato.getText(), logado);
         Resultado resultado = repositorioClientes.editarCliente(novo);
 
         Alert alert;
@@ -105,7 +108,7 @@ public class EditarCliente implements Initializable{
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         lstClientes.getItems().clear();
-        Resultado r1 = repositorioClientes.listarClientes();
+        Resultado r1 = repositorioClientes.listarClientes(logado);
 
         if(r1.foiSucesso()){
             List<Cliente> list = (List) r1.comoSucesso().getObj();

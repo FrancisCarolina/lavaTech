@@ -8,6 +8,7 @@ import com.github.hugoperlin.results.Resultado;
 
 import ifpr.pgua.eic.tarefas.App;
 import ifpr.pgua.eic.tarefas.model.entities.Cliente;
+import ifpr.pgua.eic.tarefas.model.entities.LavaCar;
 import ifpr.pgua.eic.tarefas.model.repositories.RepositorioClientes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,10 +28,12 @@ public class ListarCliente implements Initializable{
     private TextArea taDetalhes;
 
     private RepositorioClientes repositorioClientes;
+    private LavaCar logado;
     
 
-    public ListarCliente(RepositorioClientes repositorioClientes) {
+    public ListarCliente(RepositorioClientes repositorioClientes, LavaCar logado) {
         this.repositorioClientes = repositorioClientes;
+        this.logado = logado;
     }
 
     @FXML
@@ -87,7 +90,7 @@ public class ListarCliente implements Initializable{
     public void initialize(URL arg0, ResourceBundle arg1) {
         taDetalhes.setEditable(false);
         lstClientes.getItems().clear();
-        Resultado r1 = repositorioClientes.listarClientes();
+        Resultado r1 = repositorioClientes.listarClientes(logado);
 
         if(r1.foiSucesso()){
             List<Cliente> list = (List) r1.comoSucesso().getObj();

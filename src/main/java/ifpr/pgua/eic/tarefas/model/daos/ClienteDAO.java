@@ -8,7 +8,7 @@ public interface ClienteDAO {
 
   Resultado criar(Cliente Cliente);
 
-  Resultado listar();
+  Resultado listar(int idLavacar);
 
   Resultado getById(int id);
 

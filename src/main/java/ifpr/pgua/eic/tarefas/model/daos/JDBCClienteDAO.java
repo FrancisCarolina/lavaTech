@@ -26,11 +26,12 @@ public class JDBCClienteDAO implements ClienteDAO {
     try (Connection con = fabrica.getConnection()) {
 
       // Preparar o comando sql
-      PreparedStatement pstm = con.prepareStatement("INSERT INTO cliente(nome, contato) VALUES (?, ?)",
+      PreparedStatement pstm = con.prepareStatement("INSERT INTO cliente(nome, contato, idLavacar) VALUES (?, ?, ?)",
           Statement.RETURN_GENERATED_KEYS);
       // Ajustar os parâmetros
       pstm.setString(1, cliente.getNome());
       pstm.setString(2, cliente.getContato());
+      pstm.setInt(3, cliente.getLavaCar().getId());
       // Executar o comando
       int ret = pstm.executeUpdate();
 
@@ -39,7 +40,7 @@ public class JDBCClienteDAO implements ClienteDAO {
 
         cliente.setId(id);
 
-        return Resultado.sucesso("Clinte cadastrado com sucesso!", cliente);
+        return Resultado.sucesso("Cliente cadastrado com sucesso!", cliente);
       }
       return Resultado.erro("Erro desconhecido!");
     } catch (SQLException e) {
@@ -48,10 +49,11 @@ public class JDBCClienteDAO implements ClienteDAO {
   }
 
   @Override
-  public Resultado listar() {
+  public Resultado listar(int idLavacar) {
     try (Connection con = fabrica.getConnection()) {
-            PreparedStatement pstm = con.prepareStatement("SELECT * FROM cliente");
+            PreparedStatement pstm = con.prepareStatement("SELECT * FROM cliente where idLavacar=?");
 
+            pstm.setInt(1, idLavacar);
             ResultSet rs = pstm.executeQuery();
 
             ArrayList<Cliente> lista = new ArrayList<>();
@@ -61,7 +63,7 @@ public class JDBCClienteDAO implements ClienteDAO {
                 String nome = rs.getString("nome");
                 String contato = rs.getString("contato");
 
-                Cliente cliente = new Cliente(id,nome, contato);
+                Cliente cliente = new Cliente(id,nome, contato, null);
                 lista.add(cliente);
 
             }
@@ -88,7 +90,7 @@ public class JDBCClienteDAO implements ClienteDAO {
               String nome = rs.getString("nome");
               String contato = rs.getString("contato");
 
-              Cliente cliente = new Cliente(id,nome, contato);
+              Cliente cliente = new Cliente(id,nome, contato, null);
 
               return Resultado.sucesso("Cliente encontrado", cliente);
           }else{
