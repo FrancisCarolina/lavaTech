@@ -191,15 +191,20 @@ public class JDBCServicoDAO implements ServicoDAO {
         }else if(filtro == "Não Pagos"){
             sql = "SELECT * FROM servico where idLavacar = ? and pago = 0";
         }else if(filtro == "Somente os Próximos"){
-            int dia = LocalDate.now().getDayOfMonth();
-            int mes = LocalDate.now().getMonthValue();
-            sql = "SELECT * FROM servico WHERE CAST(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1, INSTR(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1), '-') - 1) AS INTEGER) > 11 OR CAST(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1, INSTR(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1), '-') - 1) AS INTEGER) = 11 AND CAST(SUBSTR(dataAgendada, 1, INSTR(dataAgendada, '-') - 1) AS INTEGER) >= 18";
+            sql = "SELECT * FROM servico WHERE idLavacar = ? AND (CAST(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1, INSTR(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1), '-') - 1) AS INTEGER) > ? OR CAST(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1, INSTR(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1), '-') - 1) AS INTEGER) = ? AND CAST(SUBSTR(dataAgendada, 1, INSTR(dataAgendada, '-') - 1) AS INTEGER) >= ?)";
            
         }
         try (Connection con = fabrica.getConnection()) {
             PreparedStatement pstm = con.prepareStatement(sql);
 
+            int dia = LocalDate.now().getDayOfMonth();
+            int mes = LocalDate.now().getMonthValue();
             pstm.setInt(1, idLogado);
+            if(filtro == "Somente os Próximos"){
+                pstm.setInt(2, mes);
+                pstm.setInt(3, mes);
+                pstm.setInt(4, dia);
+            }
 
             ResultSet rs = pstm.executeQuery();
 
@@ -219,8 +224,11 @@ public class JDBCServicoDAO implements ServicoDAO {
                 lista.add(servico);
 
             }
-
+        if(lista.size()==0){
+            return Resultado.erro("Nenhum serviço encontrado");
+        }else{
             return Resultado.sucesso("Lista de servicos", lista);
+        }
         } catch (SQLException e) {
             return Resultado.erro(e.getMessage());
         }
