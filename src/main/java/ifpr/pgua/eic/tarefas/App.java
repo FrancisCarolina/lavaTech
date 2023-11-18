@@ -11,6 +11,7 @@ import ifpr.pgua.eic.tarefas.controllers.ListarCliente;
 import ifpr.pgua.eic.tarefas.controllers.ListarServico;
 import ifpr.pgua.eic.tarefas.controllers.Login;
 import ifpr.pgua.eic.tarefas.controllers.Perfil;
+import ifpr.pgua.eic.tarefas.controllers.Totalizar;
 import ifpr.pgua.eic.tarefas.model.daos.ClienteDAO;
 import ifpr.pgua.eic.tarefas.model.daos.FabricaConexoes;
 import ifpr.pgua.eic.tarefas.model.daos.JDBCClienteDAO;
@@ -76,7 +77,7 @@ public class App extends BaseAppNavigator {
                 registraTela("CADASTRAR",
                                 new ScreenRegistryFXML(App.class, "cadastrar.fxml",
                                                 o -> new Cadastrar(repositorioLavaCar)));
-                registraTela("INICIAL", new ScreenRegistryFXML(App.class, "inicial.fxml", o -> new Inicial()));
+                registraTela("INICIAL", new ScreenRegistryFXML(App.class, "inicial.fxml", o -> new Inicial(repositorioServico, logado)));
                 registraTela("PERFIL", new ScreenRegistryFXML(App.class, "perfil.fxml",
                                 o -> new Perfil(logado, repositorioLavaCar)));
                 registraTela("EDITARPERFIL", new ScreenRegistryFXML(App.class, "editarPerfil.fxml",
@@ -97,6 +98,7 @@ public class App extends BaseAppNavigator {
                 registraTela("EDITARCLIENTE",
                                 new ScreenRegistryFXML(App.class, "editarCliente.fxml",
                                                 o -> new EditarCliente(repositorioClientes,logado)));
+                registraTela("TOTALIZAR", new ScreenRegistryFXML(App.class, "totalizarServico.fxml", o -> new Totalizar()));
                 registraTela("LISTARSERVICO", new ScreenRegistryFXML(App.class, "listarServico.fxml", o -> new ListarServico(repositorioServico, logado)));
         }
 

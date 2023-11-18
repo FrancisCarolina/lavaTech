@@ -16,10 +16,10 @@ public interface ServicoDAO {
 
     Resultado deletar(int id);
 
-    Resultado logar(String login, String senha);
-
     Resultado marcarComoPago(Servico servico);
 
     Resultado marcarComoEfetuado(Servico servico);
+
+    Resultado filtrar(int idLogado, String filtro);
 
 }

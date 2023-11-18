@@ -220,6 +220,22 @@ public class ListarServico implements Initializable {
         return valorString;
     }
 
+    @FXML
+    void mudarFiltro(ActionEvent event) {
+        tbvServicos.getItems().clear();
+        Resultado rs = repositorioServico.filtrar(logado.getId(), cbFiltro.getSelectionModel().getSelectedItem());
+
+        if (rs.foiErro()) {
+            Alert alert = new Alert(AlertType.ERROR, rs.getMsg());
+            alert.showAndWait();
+            return;
+        }
+
+        List<Servico> lista = (List) rs.comoSucesso().getObj();
+
+        tbvServicos.getItems().addAll(lista);
+    }
+
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         tbvServicos.getItems().clear();

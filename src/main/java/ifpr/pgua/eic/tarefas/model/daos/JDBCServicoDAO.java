@@ -180,9 +180,50 @@ public class JDBCServicoDAO implements ServicoDAO {
     }
 
     @Override
-    public Resultado logar(String login, String senha) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'logar'");
+    public Resultado filtrar(int idLogado, String filtro) {
+        String sql = "SELECT * FROM servico where idLavacar = ?";
+        if(filtro == "Não Efetuados"){
+            sql = "SELECT * FROM servico where idLavacar = ? and efetuado = 0";
+        }else if(filtro == "Efetuados"){
+            sql = "SELECT * FROM servico where idLavacar = ? and efetuado = 1";
+        }else if(filtro == "Pagos"){
+            sql = "SELECT * FROM servico where idLavacar = ? and pago = 1";
+        }else if(filtro == "Não Pagos"){
+            sql = "SELECT * FROM servico where idLavacar = ? and pago = 0";
+        }else if(filtro == "Somente os Próximos"){
+            int dia = LocalDate.now().getDayOfMonth();
+            int mes = LocalDate.now().getMonthValue();
+            sql = "SELECT * FROM servico WHERE CAST(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1, INSTR(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1), '-') - 1) AS INTEGER) > 11 OR CAST(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1, INSTR(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1), '-') - 1) AS INTEGER) = 11 AND CAST(SUBSTR(dataAgendada, 1, INSTR(dataAgendada, '-') - 1) AS INTEGER) >= 18";
+           
+        }
+        try (Connection con = fabrica.getConnection()) {
+            PreparedStatement pstm = con.prepareStatement(sql);
+
+            pstm.setInt(1, idLogado);
+
+            ResultSet rs = pstm.executeQuery();
+
+            ArrayList<Servico> lista = new ArrayList<>();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String dataAgendada = rs.getString("dataAgendada");
+                Float custo = rs.getFloat("custo");
+                int efetuado = rs.getInt("efetuado");
+                int pago = rs.getInt("pago");
+
+                LocalDate dateLocal = StringToLocalDate(dataAgendada);
+
+                Servico servico = new Servico(id, null, null, null, custo, efetuado == 1 ? true : false,
+                        pago == 1 ? true : false, dateLocal);
+                lista.add(servico);
+
+            }
+
+            return Resultado.sucesso("Lista de servicos", lista);
+        } catch (SQLException e) {
+            return Resultado.erro(e.getMessage());
+        }
     }
 
 }
