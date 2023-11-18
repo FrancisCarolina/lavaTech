@@ -29,13 +29,14 @@ public class RepositorioServico {
     }
 
     public Resultado cadastrarServico(String custo, Cliente c, LocalDate data, Tipo tipo, LavaCar logado) {
+        LocalDate dataAtual = LocalDate.now();
         if (custo.isEmpty() || custo.isBlank()) {
             return Resultado.erro("Custo inválido!");
         }
         if (c == null) {
             return Resultado.erro("Cliente inválido!");
         }
-        if (data == null) {
+        if (data == null || data.isBefore(dataAtual)) {
             return Resultado.erro("Data inválida!");
         }
         if (tipo == null) {

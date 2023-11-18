@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
@@ -60,7 +61,7 @@
                                 <columns>
                                   <TableColumn fx:id="tcServico" prefWidth="75.0" text="Serviço" />
                                   <TableColumn fx:id="tcDia" prefWidth="75.0" text="Dia" />
-                                    <TableColumn fx:id="tcHora" prefWidth="75.0" text="Hora" />
+                                    <TableColumn fx:id="tcCliente" prefWidth="75.0" text="Cliente" />
                                 </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -90,19 +91,15 @@
                                     <ComboBox fx:id="cbFiltro" prefWidth="150.0" />
                                  </children>
                               </HBox>
-                              <TableView fx:id="tvLucro" nodeOrientation="LEFT_TO_RIGHT" prefHeight="222.0" prefWidth="202.0">
-                                <columns>
-                                  <TableColumn fx:id="tcTotal" prefWidth="75.0" text="Total" />
-                                  <TableColumn fx:id="tcSemanal" prefWidth="75.0" text="Semanal" />
-                                    <TableColumn fx:id="tcDia" prefWidth="75.0" text="Dia" />
-                                </columns>
-                                 <columnResizePolicy>
-                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                 </columnResizePolicy>
-                              </TableView>
+                              <Label text="Média Total:" />
+                              <TextField fx:id="tfTotal" />
+                              <Label text="Média Semanal:" />
+                              <TextField fx:id="tfSemanal" />
+                              <Label text="Média Diária:" />
+                              <TextField fx:id="tfDiaria" />
                               <HBox alignment="CENTER" prefHeight="68.0" prefWidth="221.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#contabilicar" prefHeight="25.0" prefWidth="142.0" text="Contabilizar Serviços" />
+                                    <Button mnemonicParsing="false" onAction="#totalizar" prefHeight="25.0" prefWidth="142.0" text="Totalizar Serviços" />
                                  </children>
                               </HBox>
                            </children>
