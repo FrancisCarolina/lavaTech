@@ -55,10 +55,10 @@
                      <children>
                         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="568.0" spacing="30.0">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#marcarComoPago" text="Marcar como Pago" />
-                              <Button mnemonicParsing="false" onAction="#marcarComoEfetuado" text="Marcar como Efetuado" />
-                              <Button mnemonicParsing="false" onAction="#editarServico" text="Editar Serviço" />
-                              <Button mnemonicParsing="false" onAction="#excluirServico" text="Excluir Serviço" />
+                              <Button fx:id="btnPago" mnemonicParsing="false" onAction="#marcarComoPago" text="Marcar como Pago" />
+                              <Button fx:id="btnEfetuado" mnemonicParsing="false" onAction="#marcarComoEfetuado" text="Marcar como Efetuado" />
+                              <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#editarServico" text="Editar Serviço" />
+                              <Button fx:id="btnExcluir" mnemonicParsing="false" onAction="#excluirServico" text="Excluir Serviço" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_RIGHT" prefHeight="48.0" prefWidth="568.0">
@@ -69,7 +69,7 @@
                               <Insets right="20.0" top="5.0" />
                            </VBox.margin>
                         </HBox>
-                        <TableView fx:id="tbvServicos" prefHeight="267.0" prefWidth="528.0">
+                        <TableView fx:id="tbvServicos" onMouseClicked="#selecionarServico" prefHeight="267.0" prefWidth="528.0">
                           <columns>
                             <TableColumn fx:id="tbcCliente" text="Cliente" />
                             <TableColumn fx:id="tbcTipoServico" prefWidth="131.0" text="Tipo do Serviço" />

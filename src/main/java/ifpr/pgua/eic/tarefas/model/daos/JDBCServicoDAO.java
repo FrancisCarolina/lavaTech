@@ -118,7 +118,7 @@ public class JDBCServicoDAO implements ServicoDAO {
             if (ret > 0) {
                 return Resultado.sucesso("Marcado como pago!", servico);
             }
-            return Resultado.erro("Erro desconhecido!");
+            return Resultado.erro("Não achou serviço!");
         } catch (SQLException e) {
             return Resultado.erro(e.getMessage());
         }
@@ -141,7 +141,7 @@ public class JDBCServicoDAO implements ServicoDAO {
             if (ret > 0) {
                 return Resultado.sucesso("Marcado como efetuado!", servico);
             }
-            return Resultado.erro("Erro desconhecido!");
+            return Resultado.erro("Não achou serviço!");
         } catch (SQLException e) {
             return Resultado.erro(e.getMessage());
         }

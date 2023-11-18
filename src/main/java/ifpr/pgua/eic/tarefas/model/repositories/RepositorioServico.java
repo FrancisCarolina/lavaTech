@@ -85,9 +85,6 @@ public class RepositorioServico {
     public Resultado marcarComoPago(Servico servico) {
         if (servico != null) {
             Resultado r = dao.marcarComoPago(servico);
-
-            System.out.println(servico.getTipo());
-
             return r;
         }
 
@@ -97,9 +94,6 @@ public class RepositorioServico {
     public Resultado marcarComoEfetuado(Servico servico) {
         if (servico != null) {
             Resultado r = dao.marcarComoEfetuado(servico);
-
-            System.out.println(servico.getTipo());
-
             return r;
         }
 

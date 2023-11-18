@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 import com.github.hugoperlin.results.Resultado;
 
 import ifpr.pgua.eic.tarefas.App;
-import ifpr.pgua.eic.tarefas.model.entities.Cliente;
 import ifpr.pgua.eic.tarefas.model.entities.LavaCar;
 import ifpr.pgua.eic.tarefas.model.entities.Servico;
 import ifpr.pgua.eic.tarefas.model.repositories.RepositorioServico;
@@ -21,6 +20,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -37,6 +37,17 @@ public class ListarServico implements Initializable {
         this.logado = logado;
     }
 
+    @FXML
+    private Button btnEditar;
+
+    @FXML
+    private Button btnEfetuado;
+
+    @FXML
+    private Button btnExcluir;
+
+    @FXML
+    private Button btnPago;
     @FXML
     private TableColumn<Servico, String> tbcCliente;
 
@@ -77,6 +88,22 @@ public class ListarServico implements Initializable {
     void editarServico(ActionEvent event) {
 
     }
+    @FXML
+    void selecionarServico(MouseEvent event) {
+        Servico s = tbvServicos.getSelectionModel().getSelectedItem();
+        btnEditar.setDisable(false);
+        btnExcluir.setDisable(false);
+        if(!s.isEfetuado()){
+            btnEfetuado.setDisable(false);
+        }else{
+            btnEfetuado.setDisable(true);
+        }
+        if(!s.isPago()){
+            btnPago.setDisable(false);
+        }else{
+            btnPago.setDisable(true);
+        }
+    }
 
     @FXML
     void excluirServico(ActionEvent event) {
@@ -110,27 +137,25 @@ public class ListarServico implements Initializable {
 
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Confirmação");
-        alert.setHeaderText("Serviço efetuado?");
+        alert.setHeaderText("Tem certeza que deseja marcar esse serviço como efetuado?");
 
         alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.CANCEL);
 
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.YES) {
-                Resultado resultado = repositorioServico.marcarComoPago(servico);
+                Resultado resultado = repositorioServico.marcarComoEfetuado(servico);
 
                 if (resultado.foiSucesso()) {
                     Alert alertErro = new Alert(AlertType.INFORMATION, resultado.getMsg());
                     alertErro.showAndWait();
-                    initialize(null, null);
 
                 } else {
                     Alert alertErro = new Alert(AlertType.ERROR, resultado.getMsg());
                     alertErro.showAndWait();
                 }
+                initialize(null, null);
             }
         });
-
-        tbvServicos.refresh();
     }
 
     @FXML
@@ -139,7 +164,7 @@ public class ListarServico implements Initializable {
 
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Confirmação");
-        alert.setHeaderText("Pagamento efetuado?");
+        alert.setHeaderText("Tem certeza que deseja marcar esse serviço como pago?");
 
         alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.CANCEL);
 
@@ -154,6 +179,7 @@ public class ListarServico implements Initializable {
                     Alert alertErro = new Alert(AlertType.ERROR, resultado.getMsg());
                     alertErro.showAndWait();
                 }
+                initialize(null, null);
             }
         });
 
@@ -196,6 +222,12 @@ public class ListarServico implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+        tbvServicos.getItems().clear();
+        btnEditar.setDisable(true);
+        btnEfetuado.setDisable(true);
+        btnExcluir.setDisable(true);
+        btnPago.setDisable(true);
+
         cbFiltro.getItems().clear();
         cbFiltro.getItems().addAll("Todos", "Somente os Próximos", "Efetuados",
                 "Não Efetuados", "Pagos", "Não Pagos");

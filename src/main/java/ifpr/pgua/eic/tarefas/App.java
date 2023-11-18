@@ -58,7 +58,6 @@ public class App extends BaseAppNavigator {
         }
 
         public static void setLogado(LavaCar log) {
-                System.out.println(logado);
                 logado = log;
         }
 
