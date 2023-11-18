@@ -110,4 +110,39 @@ public class RepositorioServico {
         List<String> list = Arrays.asList("R$ 1000,00", "R$ 300,00", "R$50,00");
         return Resultado.sucesso("Sucesso ao ", list);
     }
+
+    public Resultado filtrar(int id, String selectedItem) {
+        Resultado resultado = dao.filtrar(id, selectedItem);
+
+        if (resultado.foiSucesso()) {
+            // iremos finalizar de montar os objetos
+            List<Servico> lista = (List<Servico>) resultado.comoSucesso().getObj();
+
+            for (Servico servico : lista) {
+                Resultado r1 = clienteDAO.buscarClienteServico(servico.getId());
+                if (r1.foiErro()) {
+                    return r1;
+                }
+                Cliente cliente = (Cliente) r1.comoSucesso().getObj();
+                servico.setCliente(cliente);
+
+                Resultado r2 = tipoDAO.buscarTipoServico(servico.getId());
+                if (r2.foiErro()) {
+                    return r2;
+                }
+                Tipo tipo = (Tipo) r2.comoSucesso().getObj();
+                servico.setTipo(tipo);
+
+                Resultado r3 = lavacarDAO.buscarLavacarServico(servico.getId());
+                if (r3.foiErro()) {
+                    return r3;
+                }
+                LavaCar lc = (LavaCar) r3.comoSucesso().getObj();
+                servico.setLavacar(lc);
+            }
+
+        }
+
+        return resultado;
+    }
 }
