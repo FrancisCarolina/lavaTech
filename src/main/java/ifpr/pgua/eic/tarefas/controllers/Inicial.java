@@ -6,11 +6,18 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import com.github.hugoperlin.results.Resultado;
+
 import ifpr.pgua.eic.tarefas.App;
+import ifpr.pgua.eic.tarefas.model.entities.Cliente;
+import ifpr.pgua.eic.tarefas.model.entities.LavaCar;
 import ifpr.pgua.eic.tarefas.model.entities.Servico;
+import ifpr.pgua.eic.tarefas.model.repositories.RepositorioServico;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -40,6 +47,14 @@ public class Inicial implements Initializable{
 
     @FXML
     private TextField tfTotal;
+
+    private RepositorioServico repositorioServico;
+    private LavaCar logado;
+
+    public Inicial(RepositorioServico repositorioServico, LavaCar logado) {
+        this.repositorioServico = repositorioServico;
+        this.logado = logado;
+    }
 
     @FXML
     void agendar() {
@@ -71,6 +86,11 @@ public class Inicial implements Initializable{
         App.pushScreen("PERFIL");
     }
 
+    @FXML
+    void mudarMes(ActionEvent event) {
+
+    }
+
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         tfDiaria.setEditable(false);
@@ -83,5 +103,17 @@ public class Inicial implements Initializable{
         LocalDate dataAtual = LocalDate.now();
         int numeroMes = dataAtual.getMonthValue();
         cbFiltro.getSelectionModel().select(meses.get(numeroMes-1));
+
+         Resultado r1 = repositorioServico.calcularMedia(numeroMes, logado);
+
+        if (r1.foiSucesso()) {
+            List<String> list = (List) r1.comoSucesso().getObj();
+            tfTotal.appendText(list.get(0));
+            tfSemanal.appendText(list.get(1));
+            tfDiaria.appendText(list.get(2));
+        } else {
+            Alert alert = new Alert(AlertType.ERROR, r1.getMsg());
+            alert.showAndWait();
+        }
     }
 }

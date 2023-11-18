@@ -1,6 +1,7 @@
 package ifpr.pgua.eic.tarefas.model.repositories;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 import com.github.hugoperlin.results.Resultado;
@@ -103,5 +104,10 @@ public class RepositorioServico {
 
     public Resultado excluirServico(Servico s) {
         return dao.deletar(s.getId());
+    }
+
+    public Resultado calcularMedia(int numeroMes, LavaCar logado) {
+        List<String> list = Arrays.asList("R$ 1000,00", "R$ 300,00", "R$50,00");
+        return Resultado.sucesso("Sucesso ao ", list);
     }
 }
