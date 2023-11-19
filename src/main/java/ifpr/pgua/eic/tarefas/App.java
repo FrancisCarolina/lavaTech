@@ -98,7 +98,7 @@ public class App extends BaseAppNavigator {
                 registraTela("EDITARCLIENTE",
                                 new ScreenRegistryFXML(App.class, "editarCliente.fxml",
                                                 o -> new EditarCliente(repositorioClientes,logado)));
-                registraTela("TOTALIZAR", new ScreenRegistryFXML(App.class, "totalizarServico.fxml", o -> new Totalizar()));
+                registraTela("TOTALIZAR", new ScreenRegistryFXML(App.class, "totalizarServico.fxml", o -> new Totalizar(logado, repositorioServico)));
                 registraTela("LISTARSERVICO", new ScreenRegistryFXML(App.class, "listarServico.fxml", o -> new ListarServico(repositorioServico, logado)));
         }
 
