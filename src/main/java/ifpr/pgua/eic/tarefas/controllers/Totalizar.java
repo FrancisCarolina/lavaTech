@@ -113,7 +113,7 @@ public class Totalizar implements Initializable{
           for(Servico s:list){
             soma = soma + s.getCusto();
           }
-          labelTotal.setText(formatarCusto("R$ " +soma));
+          labelTotal.setText("Total: "+formatarCusto("R$ " +soma));
       }else{
           Alert alert = new Alert(AlertType.ERROR, r1.getMsg());
           alert.showAndWait();

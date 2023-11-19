@@ -96,7 +96,6 @@ public class ListarServico implements Initializable {
         Servico servico = tbvServicos.getSelectionModel().getSelectedItem();
 
         if (servico != null) {
-            App.popScreen();
             App.pushScreen("EDITARSERVICO",
                     o -> new EditarServico(repositorioServico, repositorioClientes, logado, servico, repositorioTipo));
         }
