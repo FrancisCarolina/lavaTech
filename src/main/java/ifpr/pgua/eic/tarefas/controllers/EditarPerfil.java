@@ -38,12 +38,13 @@ public class EditarPerfil implements Initializable {
 
     @FXML
     void agendar(ActionEvent event) {
+        App.popScreen();
         App.pushScreen("CADASTRARSERVICO");
     }
 
     @FXML
     void excluirPerfil(MouseEvent event) {
-        if(logado != null){
+        if (logado != null) {
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Confirmação");
             alert.setHeaderText("Tem certeza que deseja excluir?");
@@ -53,12 +54,12 @@ public class EditarPerfil implements Initializable {
             alert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
                     Resultado r = repositorioLavaCar.excluirLavaCar(logado);
-                    if(r.foiSucesso()){
+                    if (r.foiSucesso()) {
                         Alert alertErro = new Alert(AlertType.INFORMATION, r.getMsg());
                         alertErro.showAndWait();
                         App.popScreen();
                         App.popScreen();
-                    }else{
+                    } else {
                         Alert alertErro = new Alert(AlertType.ERROR, r.getMsg());
                         alertErro.showAndWait();
                     }

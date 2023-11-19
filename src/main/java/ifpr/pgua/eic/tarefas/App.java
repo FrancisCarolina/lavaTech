@@ -5,6 +5,7 @@ import ifpr.pgua.eic.tarefas.controllers.CadastrarNovoCliente;
 import ifpr.pgua.eic.tarefas.controllers.CadastrarServico;
 import ifpr.pgua.eic.tarefas.controllers.EditarCliente;
 import ifpr.pgua.eic.tarefas.controllers.EditarPerfil;
+import ifpr.pgua.eic.tarefas.controllers.EditarServico;
 import ifpr.pgua.eic.tarefas.controllers.ExcluirCliente;
 import ifpr.pgua.eic.tarefas.controllers.Inicial;
 import ifpr.pgua.eic.tarefas.controllers.ListarCliente;
@@ -44,7 +45,8 @@ public class App extends BaseAppNavigator {
         private RepositorioTipo repositorioTipo = new RepositorioTipo(tipoDAO);
 
         private ServicoDAO servicoDAO = new JDBCServicoDAO(FabricaConexoes.getInstance());
-        private RepositorioServico repositorioServico = new RepositorioServico(servicoDAO, clienteDAO, tipoDAO, lavacarDAO, logado);
+        private RepositorioServico repositorioServico = new RepositorioServico(servicoDAO, clienteDAO, tipoDAO,
+                        lavacarDAO, logado);
 
         private static LavaCar logado = null;
 
@@ -72,12 +74,13 @@ public class App extends BaseAppNavigator {
         public void registrarTelas() {
                 registraTela("LOGIN",
                                 new ScreenRegistryFXML(App.class, "login.fxml",
-                                
+
                                                 o -> new Login(repositorioLavaCar, logado)));
                 registraTela("CADASTRAR",
                                 new ScreenRegistryFXML(App.class, "cadastrar.fxml",
                                                 o -> new Cadastrar(repositorioLavaCar)));
-                registraTela("INICIAL", new ScreenRegistryFXML(App.class, "inicial.fxml", o -> new Inicial(repositorioServico, logado)));
+                registraTela("INICIAL", new ScreenRegistryFXML(App.class, "inicial.fxml",
+                                o -> new Inicial(repositorioServico, logado)));
                 registraTela("PERFIL", new ScreenRegistryFXML(App.class, "perfil.fxml",
                                 o -> new Perfil(logado, repositorioLavaCar)));
                 registraTela("EDITARPERFIL", new ScreenRegistryFXML(App.class, "editarPerfil.fxml",
@@ -88,18 +91,25 @@ public class App extends BaseAppNavigator {
                                                                 repositorioServico, logado)));
                 registraTela("CADASTRARCLIENTE",
                                 new ScreenRegistryFXML(App.class, "cadastrarNovoCliente.fxml",
-                                                o -> new CadastrarNovoCliente(repositorioClientes,logado)));
+                                                o -> new CadastrarNovoCliente(repositorioClientes, logado)));
                 registraTela("LISTARCLIENTE",
                                 new ScreenRegistryFXML(App.class, "listarClientes.fxml",
-                                                o -> new ListarCliente(repositorioClientes,logado)));
+                                                o -> new ListarCliente(repositorioClientes, logado)));
                 registraTela("EXCLUIRCLIENTE",
                                 new ScreenRegistryFXML(App.class, "excluirCliente.fxml",
-                                                o -> new ExcluirCliente(repositorioClientes,logado)));
+                                                o -> new ExcluirCliente(repositorioClientes, logado)));
                 registraTela("EDITARCLIENTE",
                                 new ScreenRegistryFXML(App.class, "editarCliente.fxml",
-                                                o -> new EditarCliente(repositorioClientes,logado)));
-                registraTela("TOTALIZAR", new ScreenRegistryFXML(App.class, "totalizarServico.fxml", o -> new Totalizar(logado, repositorioServico)));
-                registraTela("LISTARSERVICO", new ScreenRegistryFXML(App.class, "listarServico.fxml", o -> new ListarServico(repositorioServico, logado)));
+                                                o -> new EditarCliente(repositorioClientes, logado)));
+                registraTela("TOTALIZAR",
+                                new ScreenRegistryFXML(App.class, "totalizarServico.fxml", o -> new Totalizar(logado, repositorioServico)));
+                registraTela("LISTARSERVICO", new ScreenRegistryFXML(App.class, "listarServico.fxml",
+                                o -> new ListarServico(repositorioServico, logado, repositorioClientes,
+                                                repositorioTipo)));
+                registraTela("EDITARSERVICO", new ScreenRegistryFXML(App.class, "editarServico.fxml",
+                                o -> new EditarServico(repositorioServico, repositorioClientes, logado,
+                                                repositorioTipo)));
+
         }
 
 }
