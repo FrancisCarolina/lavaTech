@@ -88,10 +88,10 @@
                               <Label text="Média do Lucro Mensal:" />
                               <HBox alignment="TOP_RIGHT" prefHeight="30.0" prefWidth="221.0">
                                  <children>
-                                    <ComboBox fx:id="cbFiltro" prefWidth="150.0" />
+                                    <ComboBox fx:id="cbFiltro" onAction="#mudarMes" prefWidth="150.0" />
                                  </children>
                               </HBox>
-                              <Label text="Média Total:" />
+                              <Label text="Lucro Total no Mês:" />
                               <TextField fx:id="tfTotal" />
                               <Label text="Média Semanal:" />
                               <TextField fx:id="tfSemanal" />

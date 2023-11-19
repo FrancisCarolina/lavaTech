@@ -261,4 +261,33 @@ public class JDBCServicoDAO implements ServicoDAO {
         }
     }
 
+    @Override
+    public Resultado totalizarMes(int mes, int idLogado) {
+        //SELECT SUM(custo) AS custoTotal, SUM(custo)/4 AS mediaSemanal, SUM(custo) / 30 AS mediaDiaria FROM servico WHERE CAST(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1, INSTR(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1), '-') - 1) AS INTEGER) = ?;
+        try (Connection con = fabrica.getConnection()) {
+            PreparedStatement pstm = con.prepareStatement("SELECT SUM(custo) AS custoTotal, SUM(custo)/4 AS mediaSemanal, SUM(custo) / 30 AS mediaDiaria FROM servico WHERE CAST(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1, INSTR(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1), '-') - 1) AS INTEGER) = ?");
+
+            pstm.setInt(1, mes);
+
+            ResultSet rs = pstm.executeQuery();
+
+            ArrayList<Float> lista = new ArrayList<>();
+
+            while (rs.next()) {
+                Float total = rs.getFloat("custoTotal");
+                Float semana = rs.getFloat("mediaSemanal");
+                Float dia = rs.getFloat("mediaDiaria");
+
+                lista.add(total);
+                lista.add(semana);
+                lista.add(dia);
+                return Resultado.sucesso("Lucros no Mês selecionado", lista);
+            }
+
+            return Resultado.erro("Não foi possível calcular lucro no mês selecionado");
+        } catch (SQLException e) {
+            return Resultado.erro(e.getMessage());
+        }
+    }
+
 }

@@ -22,4 +22,6 @@ public interface ServicoDAO {
 
     Resultado filtrar(int idLogado, String filtro);
 
+    Resultado totalizarMes(int mes, int idLogado);
+
 }
