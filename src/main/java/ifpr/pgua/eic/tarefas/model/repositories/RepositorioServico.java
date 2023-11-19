@@ -145,4 +145,25 @@ public class RepositorioServico {
 
         return resultado;
     }
+
+    public Resultado atualizarServico(int id, Cliente c, Tipo tipo, String custo, LocalDate data, LavaCar logado,
+            boolean efetuado, boolean pago) {
+        LocalDate dataAtual = LocalDate.now();
+        if (custo.isEmpty() || custo.isBlank()) {
+            return Resultado.erro("Custo inválido!");
+        }
+        if (c == null) {
+            return Resultado.erro("Cliente inválido!");
+        }
+        if (data == null || data.isBefore(dataAtual)) {
+            return Resultado.erro("Data inválida!");
+        }
+        if (tipo == null) {
+            return Resultado.erro("Tipo inválido!");
+        }
+
+        Servico servico = new Servico(c, logado, tipo, Float.parseFloat(custo), efetuado, pago, data);
+
+        return dao.atualizar(id, servico);
+    }
 }

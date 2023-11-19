@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -17,140 +18,144 @@
 <?import javafx.scene.text.Font?>
 
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifpr.pgua.eic.tarefas.controllers.CadastrarServico">
-   <children>
-      <HBox prefHeight="36.0" prefWidth="600.0" style="-fx-background-color: #cacaca;">
+<ScrollPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifpr.pgua.eic.tarefas.controllers.EditarServico">
+   <content>
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="600.0">
          <children>
-            <Label prefHeight="28.0" prefWidth="340.0" text="LavaTech">
-               <font>
-                  <Font size="19.0" />
-               </font>
-            </Label>
-            <HBox prefHeight="30.0" prefWidth="224.0">
+            <HBox prefHeight="36.0" prefWidth="600.0" style="-fx-background-color: #cacaca;">
                <children>
-                  <Hyperlink onAction="#clientes" prefHeight="23.0" prefWidth="76.0" text="Clientes" />
-                  <Hyperlink onAction="#listar" prefHeight="23.0" prefWidth="66.0" text="Listar" />
-                  <Hyperlink prefHeight="23.0" prefWidth="75.0" text="Agendar" />
-                  <ImageView fitHeight="25.0" fitWidth="29.0" onMouseClicked="#perfil" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
-                     <image>
-                        <Image url="@assets/icons8-usuário-homem-com-círculo-64.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </HBox>
-         </children>
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
-      </HBox>
-      <VBox prefHeight="472.0" prefWidth="600.0">
-         <children>
-            <VBox prefHeight="415.0" prefWidth="560.0" style="-fx-border-color: #cacaca;">
-               <children>
-                  <Label text="Editar Serviço">
+                  <Label prefHeight="28.0" prefWidth="340.0" text="LavaTech">
                      <font>
-                        <Font size="20.0" />
+                        <Font size="19.0" />
                      </font>
-                     <VBox.margin>
-                        <Insets bottom="5.0" />
-                     </VBox.margin>
                   </Label>
-                  <Separator prefWidth="200.0" />
-                  <HBox prefHeight="56.0" prefWidth="538.0">
+                  <HBox prefHeight="30.0" prefWidth="224.0">
                      <children>
-                        <VBox prefHeight="75.0" prefWidth="160.0">
-                           <children>
-                              <Label text="Tipo">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <ComboBox fx:id="cbTipo" prefWidth="150.0" />
-                           </children>
-                           <HBox.margin>
-                              <Insets right="20.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox prefHeight="75.0" prefWidth="160.0">
-                           <children>
-                              <Label text="Custo">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <TextField fx:id="tfCusto" />
-                           </children>
-                           <HBox.margin>
-                              <Insets right="20.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox prefHeight="75.0" prefWidth="160.0">
-                           <children>
-                              <Label text="Data de realização">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <DatePicker fx:id="dpDataRealizacao" />
-                           </children>
-                        </VBox>
+                        <Hyperlink onAction="#clientes" prefHeight="23.0" prefWidth="76.0" text="Clientes" />
+                        <Hyperlink onAction="#listar" prefHeight="23.0" prefWidth="66.0" text="Listar" />
+                        <Hyperlink prefHeight="23.0" prefWidth="75.0" text="Agendar" />
+                        <ImageView fitHeight="25.0" fitWidth="29.0" onMouseClicked="#perfil" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                           <image>
+                              <Image url="@assets/icons8-usuário-homem-com-círculo-64.png" />
+                           </image>
+                        </ImageView>
                      </children>
-                     <VBox.margin>
-                        <Insets top="20.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="538.0">
-                     <children>
-                        <VBox prefHeight="75.0" prefWidth="160.0">
-                           <children>
-                              <Label text="Pesquisar Cliente:">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <TextField fx:id="tfPesquisarCliente" onKeyReleased="#pesquisar" />
-                           </children>
-                           <HBox.margin>
-                              <Insets right="20.0" />
-                           </HBox.margin>
-                        </VBox>
-                     </children>
-                     <VBox.margin>
-                        <Insets top="20.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox prefHeight="140.0" prefWidth="538.0">
-                     <children>
-                        <ListView fx:id="lstNomeCliente" onMouseClicked="#visualizarCliente" prefHeight="140.0" prefWidth="215.0">
-                           <HBox.margin>
-                              <Insets right="20.0" />
-                           </HBox.margin>
-                        </ListView>
-                        <TextArea fx:id="taClientes" prefHeight="200.0" prefWidth="200.0" />
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="40.0" prefWidth="538.0">
-                     <children>
-                        <Hyperlink onAction="#voltar" text="Voltar">
-                           <HBox.margin>
-                              <Insets right="350.0" />
-                           </HBox.margin>
-                        </Hyperlink>
-                        <Button mnemonicParsing="false" onAction="#cadastrar" prefHeight="25.0" prefWidth="137.0" text="Editar" />
-                     </children>
-                     <VBox.margin>
-                        <Insets top="20.0" />
-                     </VBox.margin>
                   </HBox>
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
+            </HBox>
+            <VBox prefHeight="472.0" prefWidth="600.0">
+               <children>
+                  <VBox prefHeight="415.0" prefWidth="560.0" style="-fx-border-color: #cacaca;">
+                     <children>
+                        <Label text="Editar Serviço">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Separator prefWidth="200.0" />
+                        <HBox prefHeight="56.0" prefWidth="538.0">
+                           <children>
+                              <VBox prefHeight="75.0" prefWidth="160.0">
+                                 <children>
+                                    <Label text="Tipo">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <ComboBox fx:id="cbTipo" prefWidth="150.0" />
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </VBox>
+                              <VBox prefHeight="75.0" prefWidth="160.0">
+                                 <children>
+                                    <Label text="Custo">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextField fx:id="tfCusto" />
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </VBox>
+                              <VBox prefHeight="75.0" prefWidth="160.0">
+                                 <children>
+                                    <Label text="Data de realização">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <DatePicker fx:id="dpDataRealizacao" />
+                                 </children>
+                              </VBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="538.0">
+                           <children>
+                              <VBox prefHeight="75.0" prefWidth="160.0">
+                                 <children>
+                                    <Label text="Pesquisar Cliente:">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextField fx:id="tfPesquisarCliente" onKeyReleased="#pesquisar" />
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </VBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox prefHeight="140.0" prefWidth="538.0">
+                           <children>
+                              <ListView fx:id="lstNomeCliente" onMouseClicked="#visualizarCliente" prefHeight="140.0" prefWidth="215.0">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </ListView>
+                              <TextArea fx:id="taClientes" prefHeight="200.0" prefWidth="200.0" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="40.0" prefWidth="538.0">
+                           <children>
+                              <Hyperlink onAction="#voltar" text="Voltar">
+                                 <HBox.margin>
+                                    <Insets right="350.0" />
+                                 </HBox.margin>
+                              </Hyperlink>
+                              <Button mnemonicParsing="false" onAction="#editar" prefHeight="25.0" prefWidth="137.0" text="Editar" />
+                           </children>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
             </VBox>
          </children>
-         <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </padding>
       </VBox>
-   </children>
-</VBox>
+   </content>
+</ScrollPane>

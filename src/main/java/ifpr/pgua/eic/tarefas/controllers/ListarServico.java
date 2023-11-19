@@ -13,7 +13,9 @@ import com.github.hugoperlin.results.Resultado;
 import ifpr.pgua.eic.tarefas.App;
 import ifpr.pgua.eic.tarefas.model.entities.LavaCar;
 import ifpr.pgua.eic.tarefas.model.entities.Servico;
+import ifpr.pgua.eic.tarefas.model.repositories.RepositorioClientes;
 import ifpr.pgua.eic.tarefas.model.repositories.RepositorioServico;
+import ifpr.pgua.eic.tarefas.model.repositories.RepositorioTipo;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,11 +32,16 @@ import javafx.scene.input.MouseEvent;
 public class ListarServico implements Initializable {
 
     private RepositorioServico repositorioServico;
+    private RepositorioClientes repositorioClientes;
+    private RepositorioTipo repositorioTipo;
     private LavaCar logado;
 
-    public ListarServico(RepositorioServico repositorioServico, LavaCar logado) {
+    public ListarServico(RepositorioServico repositorioServico, LavaCar logado,
+            RepositorioClientes repositorioClientes, RepositorioTipo repositorioTipo) {
         this.repositorioServico = repositorioServico;
         this.logado = logado;
+        this.repositorioClientes = repositorioClientes;
+        this.repositorioTipo = repositorioTipo;
     }
 
     @FXML
@@ -86,21 +93,28 @@ public class ListarServico implements Initializable {
 
     @FXML
     void editarServico(ActionEvent event) {
+        Servico servico = tbvServicos.getSelectionModel().getSelectedItem();
 
+        if (servico != null) {
+            App.popScreen();
+            App.pushScreen("EDITARSERVICO",
+                    o -> new EditarServico(repositorioServico, repositorioClientes, logado, servico, repositorioTipo));
+        }
     }
+
     @FXML
     void selecionarServico(MouseEvent event) {
         Servico s = tbvServicos.getSelectionModel().getSelectedItem();
         btnEditar.setDisable(false);
         btnExcluir.setDisable(false);
-        if(!s.isEfetuado()){
+        if (!s.isEfetuado()) {
             btnEfetuado.setDisable(false);
-        }else{
+        } else {
             btnEfetuado.setDisable(true);
         }
-        if(!s.isPago()){
+        if (!s.isPago()) {
             btnPago.setDisable(false);
-        }else{
+        } else {
             btnPago.setDisable(true);
         }
     }

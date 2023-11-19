@@ -155,8 +155,35 @@ public class JDBCServicoDAO implements ServicoDAO {
 
     @Override
     public Resultado atualizar(int id, Servico novo) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'atualizar'");
+        // UPDATE servico SET idCliente=?, dataAgendada=?, custo=?, efetuado=?, pago=?,
+        // idTipo=?, idLavacar=? WHERE id = ?;
+        // try with resources, para não precisar fechar a conexao
+        try (Connection con = fabrica.getConnection()) {
+
+            // Preparar o comando sql
+            PreparedStatement pstm = con.prepareStatement(
+                    "UPDATE servico SET idCliente=?, dataAgendada=?, custo=?, efetuado=?, pago=?, idTipo=?, idLavacar=? WHERE id = ?",
+                    Statement.RETURN_GENERATED_KEYS);
+            // Ajustar os parâmetros
+            pstm.setInt(1, novo.getCliente().getId());
+            pstm.setString(2, formatarData(novo.getDataAgendamento()));
+            pstm.setFloat(3, novo.getCusto());
+            pstm.setInt(4, novo.isEfetuado() ? 1 : 0);
+            pstm.setInt(5, novo.isPago() ? 1 : 0);
+            pstm.setInt(6, novo.getTipo().getId());
+            pstm.setInt(7, novo.getLavacar().getId());
+            pstm.setInt(8, id);
+
+            // Executar o comando
+            int ret = pstm.executeUpdate();
+
+            if (ret > 0) {
+                return Resultado.sucesso("Serviço editado com sucesso!", novo);
+            }
+            return Resultado.erro("Erro desconhecido!");
+        } catch (SQLException e) {
+            return Resultado.erro(e.getMessage());
+        }
     }
 
     @Override
@@ -182,17 +209,17 @@ public class JDBCServicoDAO implements ServicoDAO {
     @Override
     public Resultado filtrar(int idLogado, String filtro) {
         String sql = "SELECT * FROM servico where idLavacar = ?";
-        if(filtro == "Não Efetuados"){
+        if (filtro == "Não Efetuados") {
             sql = "SELECT * FROM servico where idLavacar = ? and efetuado = 0";
-        }else if(filtro == "Efetuados"){
+        } else if (filtro == "Efetuados") {
             sql = "SELECT * FROM servico where idLavacar = ? and efetuado = 1";
-        }else if(filtro == "Pagos"){
+        } else if (filtro == "Pagos") {
             sql = "SELECT * FROM servico where idLavacar = ? and pago = 1";
-        }else if(filtro == "Não Pagos"){
+        } else if (filtro == "Não Pagos") {
             sql = "SELECT * FROM servico where idLavacar = ? and pago = 0";
-        }else if(filtro == "Somente os Próximos"){
+        } else if (filtro == "Somente os Próximos") {
             sql = "SELECT * FROM servico WHERE idLavacar = ? AND (CAST(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1, INSTR(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1), '-') - 1) AS INTEGER) > ? OR CAST(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1, INSTR(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1), '-') - 1) AS INTEGER) = ? AND CAST(SUBSTR(dataAgendada, 1, INSTR(dataAgendada, '-') - 1) AS INTEGER) >= ?)";
-           
+
         }
         try (Connection con = fabrica.getConnection()) {
             PreparedStatement pstm = con.prepareStatement(sql);
@@ -200,7 +227,7 @@ public class JDBCServicoDAO implements ServicoDAO {
             int dia = LocalDate.now().getDayOfMonth();
             int mes = LocalDate.now().getMonthValue();
             pstm.setInt(1, idLogado);
-            if(filtro == "Somente os Próximos"){
+            if (filtro == "Somente os Próximos") {
                 pstm.setInt(2, mes);
                 pstm.setInt(3, mes);
                 pstm.setInt(4, dia);
@@ -224,11 +251,11 @@ public class JDBCServicoDAO implements ServicoDAO {
                 lista.add(servico);
 
             }
-        if(lista.size()==0){
-            return Resultado.erro("Nenhum serviço encontrado");
-        }else{
-            return Resultado.sucesso("Lista de servicos", lista);
-        }
+            if (lista.size() == 0) {
+                return Resultado.erro("Nenhum serviço encontrado");
+            } else {
+                return Resultado.sucesso("Lista de servicos", lista);
+            }
         } catch (SQLException e) {
             return Resultado.erro(e.getMessage());
         }
