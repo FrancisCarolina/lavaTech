@@ -110,9 +110,7 @@ public class RepositorioServico {
         return dao.totalizarMes(numeroMes, logado.getId());
     }
 
-    public Resultado listarEssaSemana(int idLogado){
-        Resultado resultado = dao.listarEssaSemana(idLogado);
-
+    public Resultado auxiliarBuscarEstrangeiros(Resultado resultado){
         if (resultado.foiSucesso()) {
             // iremos finalizar de montar os objetos
             List<Servico> lista = (List<Servico>) resultado.comoSucesso().getObj();
@@ -139,45 +137,18 @@ public class RepositorioServico {
                 LavaCar lc = (LavaCar) r3.comoSucesso().getObj();
                 servico.setLavacar(lc);
             }
-
         }
-
         return resultado;
+    }
+
+    public Resultado listarEssaSemana(int idLogado){
+        Resultado resultado = dao.listarEssaSemana(idLogado);
+        return auxiliarBuscarEstrangeiros(resultado);
     }
 
     public Resultado filtrar(int id, String selectedItem) {
         Resultado resultado = dao.filtrar(id, selectedItem);
-
-        if (resultado.foiSucesso()) {
-            // iremos finalizar de montar os objetos
-            List<Servico> lista = (List<Servico>) resultado.comoSucesso().getObj();
-
-            for (Servico servico : lista) {
-                Resultado r1 = clienteDAO.buscarClienteServico(servico.getId());
-                if (r1.foiErro()) {
-                    return r1;
-                }
-                Cliente cliente = (Cliente) r1.comoSucesso().getObj();
-                servico.setCliente(cliente);
-
-                Resultado r2 = tipoDAO.buscarTipoServico(servico.getId());
-                if (r2.foiErro()) {
-                    return r2;
-                }
-                Tipo tipo = (Tipo) r2.comoSucesso().getObj();
-                servico.setTipo(tipo);
-
-                Resultado r3 = lavacarDAO.buscarLavacarServico(servico.getId());
-                if (r3.foiErro()) {
-                    return r3;
-                }
-                LavaCar lc = (LavaCar) r3.comoSucesso().getObj();
-                servico.setLavacar(lc);
-            }
-
-        }
-
-        return resultado;
+        return auxiliarBuscarEstrangeiros(resultado);
     }
 
     public Resultado atualizarServico(int id, Cliente c, Tipo tipo, String custo, LocalDate data, LavaCar logado,
@@ -199,5 +170,10 @@ public class RepositorioServico {
         Servico servico = new Servico(c, logado, tipo, Float.parseFloat(custo), efetuado, pago, data);
 
         return dao.atualizar(id, servico);
+    }
+
+    public Resultado listarTotal(int id) {
+        Resultado resultado = dao.listarTotal(id);
+        return auxiliarBuscarEstrangeiros(resultado);
     }
 }

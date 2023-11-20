@@ -35,6 +35,7 @@ public class ListarServico implements Initializable {
     private RepositorioClientes repositorioClientes;
     private RepositorioTipo repositorioTipo;
     private LavaCar logado;
+    private Inicial inicial;
 
     public ListarServico(RepositorioServico repositorioServico, LavaCar logado,
             RepositorioClientes repositorioClientes, RepositorioTipo repositorioTipo) {
@@ -43,6 +44,16 @@ public class ListarServico implements Initializable {
         this.repositorioClientes = repositorioClientes;
         this.repositorioTipo = repositorioTipo;
     }
+
+    public ListarServico(RepositorioServico repositorioServico, LavaCar logado,
+            RepositorioClientes repositorioClientes, RepositorioTipo repositorioTipo, Inicial inicial) {
+        this.repositorioServico = repositorioServico;
+        this.logado = logado;
+        this.repositorioClientes = repositorioClientes;
+        this.repositorioTipo = repositorioTipo;
+        this.inicial = inicial;
+    }
+
 
     @FXML
     private Button btnEditar;
@@ -209,6 +220,9 @@ public class ListarServico implements Initializable {
 
     @FXML
     void voltar(ActionEvent event) {
+        if(inicial != null){
+            inicial.atualizarDados();
+        }
         App.popScreen();
     }
 

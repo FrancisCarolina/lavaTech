@@ -104,7 +104,7 @@ public class Totalizar implements Initializable{
       tbcServico.setCellValueFactory(celula -> new SimpleStringProperty(celula.getValue().getTipo().getNome()));
 
 
-      Resultado r1 = repositorioServico.listar(logado.getId());
+      Resultado r1 = repositorioServico.listarTotal(logado.getId());
 
       if(r1.foiSucesso()){
           List<Servico> list = (List) r1.comoSucesso().getObj();
