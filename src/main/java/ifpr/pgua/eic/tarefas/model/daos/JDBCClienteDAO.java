@@ -139,7 +139,7 @@ public class JDBCClienteDAO implements ClienteDAO {
             if (linhasAfetadas > 0) {
                 return Resultado.sucesso("Excluido com sucesso", "");
             } else {
-                return Resultado.erro("Cliente não encontrado");
+                return Resultado.sucesso("Excluido com sucesso", "");
             }
         } catch (SQLException e) {
             return Resultado.erro(e.getMessage());
