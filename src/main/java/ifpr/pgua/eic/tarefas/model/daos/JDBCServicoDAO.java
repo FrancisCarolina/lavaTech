@@ -237,9 +237,9 @@ public class JDBCServicoDAO implements ServicoDAO {
                 LocalDate dateLocal = StringToLocalDate(dataAgendada);
                 LocalDate hoje = LocalDate.now();
 
+                Servico servico = new Servico(id, null, null, null, custo,efetuado == 1 ? true : false,pago == 1 ? true : false, dateLocal);
+                
                 if ((filtro == "Somente os Próximos" && !dateLocal.isBefore(hoje))|| filtro != "Somente os Próximos") {
-                    Servico servico = new Servico(id, null, null, null, custo, efetuado == 1 ? true : false,
-                            pago == 1 ? true : false, dateLocal);
                     lista.add(servico);
                 }
             }
