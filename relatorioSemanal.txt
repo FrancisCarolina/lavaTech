@@ -1,0 +1,55 @@
+Semana 1
+28/09/2023
+Criação do repositório no Github
+Criando esqueleto inicial
+Desenvolvendo fxml 
+Tela Login
+Tela Cadastrar
+
+
+Semana 2
+07/11/2023
+    Desenvolvendo fxml
+        Tela Inicial
+        Tela Agendar Serviço
+08/11/2023
+Desenvolvendo fxml
+Tela Totalizar Serviço
+09/11/2023
+Criando Entidade LavaCar
+Criando Repositórios e DAOs LavaCar
+Implementando Cadastro de Lavacar
+Implementando Login de LavaCar
+10/11/2023
+Salvando LavaCar logado para usar em outras telas
+Criando Entidade Cliente
+Criando Repositórios e DAOs Cliente
+Desenvolvendo fxml
+Cadastro de Cliente
+Listar Clientes
+Adicionando mais um link no nav
+Implementando cadastro de Cliente
+Implementando lista de Clientes
+Adicionando lista na tela de Agendar Serviço
+
+
+
+Semana 3
+15/11/2023
+Desenvolvendo fxml
+Tela de Editar LavaCar
+Tela de Editar Cliente
+Tela de Excluir Cliente
+Implementando edição de LavaCar
+Implementando edição de Cliente
+Implementando exclusão de LavaCar
+Implementando exclusão de Cliente
+Implementando Deslogar
+16/11/2023
+Desenvolvendo fxml
+Tela de Listar Serviço
+Implementando Cadastrar Serviço
+17/11/2023
+Implementando lista de serviços
+Implementando marcação de pago e efetuado
+Implementando excluir serviço
