@@ -76,7 +76,7 @@
                               <TableColumn fx:id="tbcCusto" prefWidth="83.0" text="Custo" />
                               <TableColumn fx:id="tbcDataAgendada" prefWidth="94.0" text="Data Agendada" />
                               <TableColumn fx:id="tbcPago" prefWidth="56.0" text="Pago" />
-                              <TableColumn fx:id="tbcRealizado" prefWidth="83.0" text="Realizado" />
+                              <TableColumn fx:id="tbcRealizado" prefWidth="83.0" text="Efetuado" />
                           </columns>
                            <VBox.margin>
                               <Insets left="20.0" right="20.0" top="5.0" />
