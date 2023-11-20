@@ -287,7 +287,7 @@ public class ListarServico implements Initializable {
         }
 
         List<Servico> lista = (List) rs.comoSucesso().getObj();
-
+        tbvServicos.getItems().clear();
         tbvServicos.getItems().addAll(lista);
     }
 
