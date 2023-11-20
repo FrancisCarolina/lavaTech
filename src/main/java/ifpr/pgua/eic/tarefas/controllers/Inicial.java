@@ -80,12 +80,12 @@ public class Inicial implements Initializable{
 
     @FXML
     void listar() {
-        App.pushScreen("LISTARSERVICO");
+        App.pushScreen("LISTARSERVICO", o -> new ListarServico(repositorioServico, logado, repositorioCliente, repositorioTipo, this));
     }   
 
     @FXML
     void listarServico() {
-        App.pushScreen("LISTARSERVICO");
+        App.pushScreen("LISTARSERVICO", o -> new ListarServico(repositorioServico, logado, repositorioCliente, repositorioTipo, this));
     }
 
     @FXML
