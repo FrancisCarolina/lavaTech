@@ -24,4 +24,6 @@ public interface ServicoDAO {
 
     Resultado totalizarMes(int mes, int idLogado);
 
+    Resultado listarEssaSemana(int idLogado);
+
 }

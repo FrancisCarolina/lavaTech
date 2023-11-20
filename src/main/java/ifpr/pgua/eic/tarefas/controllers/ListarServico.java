@@ -104,17 +104,19 @@ public class ListarServico implements Initializable {
     @FXML
     void selecionarServico(MouseEvent event) {
         Servico s = tbvServicos.getSelectionModel().getSelectedItem();
-        btnEditar.setDisable(false);
-        btnExcluir.setDisable(false);
-        if (!s.isEfetuado()) {
-            btnEfetuado.setDisable(false);
-        } else {
-            btnEfetuado.setDisable(true);
-        }
-        if (!s.isPago()) {
-            btnPago.setDisable(false);
-        } else {
-            btnPago.setDisable(true);
+        if(s != null){
+            btnEditar.setDisable(false);
+            btnExcluir.setDisable(false);
+            if (!s.isEfetuado()) {
+                btnEfetuado.setDisable(false);
+            } else {
+                btnEfetuado.setDisable(true);
+            }
+            if (!s.isPago()) {
+                btnPago.setDisable(false);
+            } else {
+                btnPago.setDisable(true);
+            }
         }
     }
 

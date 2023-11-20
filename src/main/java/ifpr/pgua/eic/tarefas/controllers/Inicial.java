@@ -4,6 +4,7 @@ import java.net.URL;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -16,6 +17,7 @@ import ifpr.pgua.eic.tarefas.model.entities.Cliente;
 import ifpr.pgua.eic.tarefas.model.entities.LavaCar;
 import ifpr.pgua.eic.tarefas.model.entities.Servico;
 import ifpr.pgua.eic.tarefas.model.repositories.RepositorioServico;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -34,10 +36,10 @@ public class Inicial implements Initializable{
     private TableView<Servico> tbAgendamentos;
 
     @FXML
-    private TableColumn<Servico, String> tcDia;
+    private TableColumn<Servico, String> tcCliente;
 
     @FXML
-    private TableColumn<Servico, String> tcHora;
+    private TableColumn<Servico, String> tcDia;
 
     @FXML
     private TableColumn<Servico, String> tcServico;
@@ -131,6 +133,7 @@ public class Inicial implements Initializable{
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+        tbAgendamentos.getItems().clear();
         tfDiaria.setEditable(false);
         tfSemanal.setEditable(false);
         tfTotal.setEditable(false);
@@ -150,6 +153,20 @@ public class Inicial implements Initializable{
             tfDiaria.appendText(formatarCusto("R$ "+list.get(2)));
         } else {
             Alert alert = new Alert(AlertType.ERROR, r1.getMsg());
+            alert.showAndWait();
+        }
+
+        tcServico.setCellValueFactory(celula -> new SimpleStringProperty(celula.getValue().getTipo().getNome()));
+        tcDia.setCellValueFactory(celula -> new SimpleStringProperty(celula.getValue().getDataAgendamento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))+""));
+        tcCliente.setCellValueFactory(celula -> new SimpleStringProperty(celula.getValue().getCliente().getNome()));
+
+        Resultado r2 = repositorioServico.listarEssaSemana(logado.getId());
+
+        if (r2.foiSucesso()) {
+            List<Servico> list = (List) r2.comoSucesso().getObj();
+            tbAgendamentos.getItems().addAll(list);
+        } else {
+            Alert alert = new Alert(AlertType.ERROR, r2.getMsg());
             alert.showAndWait();
         }
     }

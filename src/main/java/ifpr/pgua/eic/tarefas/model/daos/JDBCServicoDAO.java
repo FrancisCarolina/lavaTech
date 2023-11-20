@@ -291,4 +291,41 @@ public class JDBCServicoDAO implements ServicoDAO {
         }
     }
 
+    @Override
+    public Resultado listarEssaSemana(int idLogado) {
+        try (Connection con = fabrica.getConnection()) {
+            PreparedStatement pstm = con.prepareStatement("SELECT * FROM servico where idLavacar = ?");
+
+            pstm.setInt(1, idLogado);
+
+            ResultSet rs = pstm.executeQuery();
+
+            ArrayList<Servico> lista = new ArrayList<>();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String dataAgendada = rs.getString("dataAgendada");
+                Float custo = rs.getFloat("custo");
+                int efetuado = rs.getInt("efetuado");
+                int pago = rs.getInt("pago");
+
+                LocalDate dateLocal = StringToLocalDate(dataAgendada);
+                LocalDate hoje= LocalDate.now();
+
+                if(hoje.minusDays(8).isBefore(dateLocal) && hoje.plusDays(8).isAfter(dateLocal) ){
+
+                    Servico servico = new Servico(id, null, null, null, custo, efetuado == 1 ? true : false,
+                            pago == 1 ? true : false, dateLocal);
+                    lista.add(servico);
+                }
+
+
+            }
+
+            return Resultado.sucesso("Lista de servicos", lista);
+        } catch (SQLException e) {
+            return Resultado.erro(e.getMessage());
+        }
+    }
+
 }
