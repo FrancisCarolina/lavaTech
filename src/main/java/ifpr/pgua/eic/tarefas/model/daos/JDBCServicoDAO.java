@@ -217,21 +217,11 @@ public class JDBCServicoDAO implements ServicoDAO {
             sql = "SELECT * FROM servico where idLavacar = ? and pago = 1";
         } else if (filtro == "Não Pagos") {
             sql = "SELECT * FROM servico where idLavacar = ? and pago = 0";
-        } else if (filtro == "Somente os Próximos") {
-            sql = "SELECT * FROM servico WHERE idLavacar = ? AND (CAST(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1, INSTR(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1), '-') - 1) AS INTEGER) > ? OR CAST(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1, INSTR(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1), '-') - 1) AS INTEGER) = ? AND CAST(SUBSTR(dataAgendada, 1, INSTR(dataAgendada, '-') - 1) AS INTEGER) >= ?)";
-
-        }
+        } 
         try (Connection con = fabrica.getConnection()) {
             PreparedStatement pstm = con.prepareStatement(sql);
-
-            int dia = LocalDate.now().getDayOfMonth();
-            int mes = LocalDate.now().getMonthValue();
             pstm.setInt(1, idLogado);
-            if (filtro == "Somente os Próximos") {
-                pstm.setInt(2, mes);
-                pstm.setInt(3, mes);
-                pstm.setInt(4, dia);
-            }
+            
 
             ResultSet rs = pstm.executeQuery();
 
@@ -245,11 +235,13 @@ public class JDBCServicoDAO implements ServicoDAO {
                 int pago = rs.getInt("pago");
 
                 LocalDate dateLocal = StringToLocalDate(dataAgendada);
+                LocalDate hoje = LocalDate.now();
 
-                Servico servico = new Servico(id, null, null, null, custo, efetuado == 1 ? true : false,
-                        pago == 1 ? true : false, dateLocal);
-                lista.add(servico);
-
+                if ((filtro == "Somente os Próximos" && !dateLocal.isBefore(hoje))|| filtro != "Somente os Próximos") {
+                    Servico servico = new Servico(id, null, null, null, custo, efetuado == 1 ? true : false,
+                            pago == 1 ? true : false, dateLocal);
+                    lista.add(servico);
+                }
             }
             if (lista.size() == 0) {
                 return Resultado.erro("Nenhum serviço encontrado");
