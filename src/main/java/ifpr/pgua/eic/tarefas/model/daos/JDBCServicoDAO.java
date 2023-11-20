@@ -265,9 +265,10 @@ public class JDBCServicoDAO implements ServicoDAO {
     public Resultado totalizarMes(int mes, int idLogado) {
         //SELECT SUM(custo) AS custoTotal, SUM(custo)/4 AS mediaSemanal, SUM(custo) / 30 AS mediaDiaria FROM servico WHERE CAST(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1, INSTR(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1), '-') - 1) AS INTEGER) = ?;
         try (Connection con = fabrica.getConnection()) {
-            PreparedStatement pstm = con.prepareStatement("SELECT SUM(custo) AS custoTotal, SUM(custo)/4 AS mediaSemanal, SUM(custo) / 30 AS mediaDiaria FROM servico WHERE CAST(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1, INSTR(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1), '-') - 1) AS INTEGER) = ?");
-
-            pstm.setInt(1, mes);
+            PreparedStatement pstm = con.prepareStatement("SELECT SUM(custo) AS custoTotal, SUM(custo)/4 AS mediaSemanal, SUM(custo) / 30 AS mediaDiaria FROM servico WHERE idLavacar = ? and CAST(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1, INSTR(SUBSTR(dataAgendada, INSTR(dataAgendada, '-') + 1), '-') - 1) AS INTEGER) = ?");
+            
+            pstm.setInt(1, idLogado);
+            pstm.setInt(2, mes);
 
             ResultSet rs = pstm.executeQuery();
 

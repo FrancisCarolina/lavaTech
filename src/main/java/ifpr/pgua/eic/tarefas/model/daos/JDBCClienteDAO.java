@@ -128,6 +128,23 @@ public class JDBCClienteDAO implements ClienteDAO {
           return Resultado.erro(e.getMessage());
       }
   }
+  private Resultado deletarServicosCliente(int id){
+    try (Connection con = fabrica.getConnection()) {
+            PreparedStatement pstm = con.prepareStatement("Delete FROM servico where idCliente=?", Statement.RETURN_GENERATED_KEYS);
+           
+            pstm.setInt(1, id);
+
+            int linhasAfetadas = pstm.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                return Resultado.sucesso("Excluido com sucesso", "");
+            } else {
+                return Resultado.erro("Cliente não encontrado");
+            }
+        } catch (SQLException e) {
+            return Resultado.erro(e.getMessage());
+        }
+  }
 
   @Override
   public Resultado deletar(int id) {
@@ -140,7 +157,7 @@ public class JDBCClienteDAO implements ClienteDAO {
             int linhasAfetadas = pstm.executeUpdate();
 
             if (linhasAfetadas > 0) {
-                return Resultado.sucesso("Excluído com sucesso", "");
+                return deletarServicosCliente(id);
             } else {
                 return Resultado.erro("Cliente não encontrado");
             }
