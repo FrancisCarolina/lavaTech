@@ -16,7 +16,9 @@ import ifpr.pgua.eic.tarefas.App;
 import ifpr.pgua.eic.tarefas.model.entities.Cliente;
 import ifpr.pgua.eic.tarefas.model.entities.LavaCar;
 import ifpr.pgua.eic.tarefas.model.entities.Servico;
+import ifpr.pgua.eic.tarefas.model.repositories.RepositorioClientes;
 import ifpr.pgua.eic.tarefas.model.repositories.RepositorioServico;
+import ifpr.pgua.eic.tarefas.model.repositories.RepositorioTipo;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -56,16 +58,19 @@ public class Inicial implements Initializable{
     private RepositorioServico repositorioServico;
     private LavaCar logado;
     private List<String> meses = Arrays.asList("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
-        
+    private RepositorioClientes repositorioCliente;
+    private RepositorioTipo repositorioTipo;
 
-    public Inicial(RepositorioServico repositorioServico, LavaCar logado) {
+    public Inicial(RepositorioServico repositorioServico, LavaCar logado, RepositorioClientes repositorioCliente, RepositorioTipo repositorioTipo) {
         this.repositorioServico = repositorioServico;
         this.logado = logado;
+        this.repositorioCliente = repositorioCliente;
+        this.repositorioTipo = repositorioTipo;
     }
 
     @FXML
     void agendar() {
-        App.pushScreen("CADASTRARSERVICO");
+        App.pushScreen("CADASTRARSERVICO", o -> new CadastrarServico(repositorioCliente, repositorioTipo, repositorioServico, logado, this));
     }
 
     @FXML
@@ -130,13 +135,15 @@ public class Inicial implements Initializable{
         }
         return valorString;
     }
-
-    @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
+    public void atualizarDados(){
         tbAgendamentos.getItems().clear();
         tfDiaria.setEditable(false);
         tfSemanal.setEditable(false);
         tfTotal.setEditable(false);
+        
+        tfDiaria.setText("");;
+        tfSemanal.setText("");
+        tfTotal.setText("");
 
         cbFiltro.getItems().clear();
         cbFiltro.getItems().addAll(meses);
@@ -148,9 +155,9 @@ public class Inicial implements Initializable{
 
         if (r1.foiSucesso()) {
             List<Float> list = (List) r1.comoSucesso().getObj();
-            tfTotal.appendText(formatarCusto("R$ "+list.get(0)));
-            tfSemanal.appendText(formatarCusto("R$ "+list.get(1)));
-            tfDiaria.appendText(formatarCusto("R$ "+list.get(2)));
+            tfTotal.setText(formatarCusto("R$ "+list.get(0)));
+            tfSemanal.setText(formatarCusto("R$ "+list.get(1)));
+            tfDiaria.setText(formatarCusto("R$ "+list.get(2)));
         } else {
             Alert alert = new Alert(AlertType.ERROR, r1.getMsg());
             alert.showAndWait();
@@ -164,10 +171,16 @@ public class Inicial implements Initializable{
 
         if (r2.foiSucesso()) {
             List<Servico> list = (List) r2.comoSucesso().getObj();
+            tbAgendamentos.getItems().clear();
             tbAgendamentos.getItems().addAll(list);
         } else {
             Alert alert = new Alert(AlertType.ERROR, r2.getMsg());
             alert.showAndWait();
         }
+    }
+
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        atualizarDados();
     }
 }

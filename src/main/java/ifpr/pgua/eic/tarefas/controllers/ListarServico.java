@@ -44,6 +44,7 @@ public class ListarServico implements Initializable {
         this.repositorioTipo = repositorioTipo;
     }
 
+
     @FXML
     private Button btnEditar;
 
