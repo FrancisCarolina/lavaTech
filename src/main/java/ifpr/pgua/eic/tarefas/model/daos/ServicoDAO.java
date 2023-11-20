@@ -10,8 +10,6 @@ public interface ServicoDAO {
 
     Resultado listar(int idLogado);
 
-    Resultado getById(int id);
-
     Resultado atualizar(int id, Servico novo);
 
     Resultado deletar(int id);
@@ -25,5 +23,7 @@ public interface ServicoDAO {
     Resultado totalizarMes(int mes, int idLogado);
 
     Resultado listarEssaSemana(int idLogado);
+
+    Resultado listarTotal(int id);
 
 }

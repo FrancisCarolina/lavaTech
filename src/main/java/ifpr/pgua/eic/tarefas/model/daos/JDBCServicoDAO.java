@@ -148,12 +148,6 @@ public class JDBCServicoDAO implements ServicoDAO {
     }
 
     @Override
-    public Resultado getById(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getById'");
-    }
-
-    @Override
     public Resultado atualizar(int id, Servico novo) {
         // UPDATE servico SET idCliente=?, dataAgendada=?, custo=?, efetuado=?, pago=?,
         // idTipo=?, idLavacar=? WHERE id = ?;
@@ -311,6 +305,39 @@ public class JDBCServicoDAO implements ServicoDAO {
                     lista.add(servico);
                 }
 
+
+            }
+
+            return Resultado.sucesso("Lista de servicos", lista);
+        } catch (SQLException e) {
+            return Resultado.erro(e.getMessage());
+        }
+    }
+
+    @Override
+    public Resultado listarTotal(int idLogado) {
+        try (Connection con = fabrica.getConnection()) {
+            PreparedStatement pstm = con.prepareStatement("SELECT * FROM servico where idLavacar = ? and pago = ?");
+
+            pstm.setInt(1, idLogado);
+            pstm.setInt(2, 1);
+
+            ResultSet rs = pstm.executeQuery();
+
+            ArrayList<Servico> lista = new ArrayList<>();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String dataAgendada = rs.getString("dataAgendada");
+                Float custo = rs.getFloat("custo");
+                int efetuado = rs.getInt("efetuado");
+                int pago = rs.getInt("pago");
+
+                LocalDate dateLocal = StringToLocalDate(dataAgendada);
+
+                Servico servico = new Servico(id, null, null, null, custo, efetuado == 1 ? true : false,
+                        pago == 1 ? true : false, dateLocal);
+                lista.add(servico);
 
             }
 
