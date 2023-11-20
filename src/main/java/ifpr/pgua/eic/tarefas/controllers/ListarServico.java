@@ -148,7 +148,6 @@ public class ListarServico implements Initializable {
 
     @FXML
     void marcarComoEfetuado(ActionEvent event) {
-        tbvServicos.getItems().clear();
         Servico servico = tbvServicos.getSelectionModel().getSelectedItem();
 
         Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -176,7 +175,6 @@ public class ListarServico implements Initializable {
 
     @FXML
     void marcarComoPago(ActionEvent event) {
-        tbvServicos.getItems().clear();
         Servico servico = tbvServicos.getSelectionModel().getSelectedItem();
 
         Alert alert = new Alert(AlertType.CONFIRMATION);
